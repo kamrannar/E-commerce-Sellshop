@@ -1,0 +1,210 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-09-02 09:59-0500\n"
+"PO-Revision-Date: 2022-09-02 10:00-0500\n"
+"Last-Translator:   <kamrann.nariman@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Translated-Using: django-rosetta 0.9.8\n"
+
+#: _backend/settings.py:113
+msgid "English"
+msgstr "İngiliscə"
+
+#: _backend/settings.py:114 templates/base.html:363
+msgid "Azerbaijan"
+msgstr "Azərbaycanca"
+
+#: _backend/settings.py:115
+msgid "Spanish"
+msgstr "İspanca"
+
+#: _backend/urls.py:15
+msgid "admin/"
+msgstr "admin/"
+
+#: product/views.py:32
+msgid "hello"
+msgstr "salam"
+
+#: templates/base.html:140 templates/base.html:195
+msgid "Home"
+msgstr "Ana səhifə"
+
+#: templates/base.html:142 templates/base.html:197
+msgid "Shop"
+msgstr "Mağaza"
+
+#: templates/base.html:147 templates/base.html:200 templates/base.html:225
+#: templates/base.html:319
+msgid "men’s wear"
+msgstr "Kişi geyimi"
+
+#: templates/base.html:149
+msgid "Shirts & Top"
+msgstr "Köynəklər"
+
+#: templates/base.html:150 templates/base.html:162 templates/base.html:203
+#: templates/base.html:215
+msgid "Shoes"
+msgstr "Ayaqqabılar"
+
+#: templates/base.html:151 templates/base.html:163 templates/base.html:204
+#: templates/base.html:216
+msgid "Dresses"
+msgstr "Paltarlar"
+
+#: templates/base.html:152 templates/base.html:164 templates/base.html:205
+#: templates/base.html:217
+msgid "Jeans"
+msgstr "Cins"
+
+#: templates/base.html:153 templates/base.html:165 templates/base.html:206
+#: templates/base.html:218
+msgid "Sweaters"
+msgstr "Sviter"
+
+#: templates/base.html:154 templates/base.html:166 templates/base.html:207
+#: templates/base.html:219
+msgid "Jacket"
+msgstr "Jaket"
+
+#: templates/base.html:155 templates/base.html:208
+msgid "Men Watch"
+msgstr "Kişi saatı"
+
+#: templates/base.html:159 templates/base.html:212
+#, fuzzy
+#| msgid "men’s wear"
+msgid "women’s wear"
+msgstr "Kişi geyimi"
+
+#: templates/base.html:161 templates/base.html:202 templates/base.html:214
+#, fuzzy
+#| msgid "Shirts & Top"
+msgid "Shirts"
+msgstr "Köynəklər"
+
+#: templates/base.html:167 templates/base.html:220
+#, fuzzy
+#| msgid "Men Watch"
+msgid "Women Watch"
+msgstr "Kişi saatı"
+
+#: templates/base.html:174
+msgid "Pages"
+msgstr "Səhifələr"
+
+#: templates/base.html:176 templates/base.html:227
+msgid "Wishlist"
+msgstr "Wishlist"
+
+#: templates/base.html:177 templates/base.html:229 templates/base.html:394
+#: templates/index.html:813
+msgid "Checkout"
+msgstr "Checkout"
+
+#: templates/base.html:178 templates/base.html:231
+msgid "Cart"
+msgstr "Səbət"
+
+#: templates/base.html:179 templates/base.html:233
+msgid "Product List View"
+msgstr "Məhsulların siyahısı"
+
+#: templates/base.html:180 templates/base.html:234
+msgid "404 page"
+msgstr "404"
+
+#: templates/base.html:183 templates/base.html:237
+msgid "Blog"
+msgstr "Bloq"
+
+#: templates/base.html:185 templates/base.html:239
+msgid "About"
+msgstr "Haqqında"
+
+#: templates/base.html:186 templates/base.html:240
+msgid "Contact"
+msgstr "Əlaqə"
+
+#: templates/base.html:251
+msgid "items"
+msgstr "əşyalar"
+
+#: templates/base.html:335
+msgid "get in touch"
+msgstr "Əlaqəyə keç"
+
+#: templates/base.html:356
+msgid "Contact us"
+msgstr "Əlaqə"
+
+#: templates/base.html:362
+msgid "Baku"
+msgstr "Bakı"
+
+#: templates/base.html:382
+msgid "my account"
+msgstr "Mənim hesabım"
+
+#: templates/base.html:386
+msgid "My Account"
+msgstr "Mənim hesabım"
+
+#: templates/base.html:388
+msgid "My Wishlist"
+msgstr "Mənim siyahım"
+
+#: templates/base.html:390
+msgid "My Cart"
+msgstr "Mənim səbətim"
+
+#: templates/base.html:392
+msgid "Sign In"
+msgstr "Daxil ol"
+
+#: templates/base.html:396
+msgid "Track My Order"
+msgstr "Sİfarişi izlə"
+
+#: templates/index.html:302
+msgid "New arrival"
+msgstr "Yeni gələnlər"
+
+#: templates/index.html:303
+msgid "Popular items"
+msgstr "Populyar məhsullar"
+
+#: templates/index.html:304
+msgid "Bestsellers"
+msgstr "Ən çox satılanlar"
+
+#: templates/index.html:401 templates/index.html:592
+msgid "Load More"
+msgstr "Daha çox"
+
+#: templates/index.html:797
+msgid "Latest Blogs"
+msgstr "Ən son bloqlar"
+
+#: templates/index.html:867
+#, fuzzy
+#| msgid "Load More"
+msgid "Load more"
+msgstr "Daha çox"
+
+#~ msgid "Shemwear"
+#~ msgstr "Shemwear"

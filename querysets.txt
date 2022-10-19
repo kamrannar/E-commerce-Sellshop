@@ -1,0 +1,45 @@
+1) Məhsulun qiymət və əlavə olunma tarixinə görə sort edən qs yazın:
+
+1.1
+
+Qiymətə görə  :
+
+product = Product_version.objects.order_by('price')
+for i in product:
+...     print(i)
+
+1.2
+
+Əlavə olunma tarixinə görə :
+
+product = Product_version.objects.order_by('created_at')
+for i in product:
+...     print(i)
+
+
+2) Blog postların kateqoriyalarını qaytaran qs yazın :
+
+from blog.models import *
+from product.models import *
+blog = Blog.objects.all()
+for i in blog:
+   print(i.category.categories)
+
+3) Daxil edilmiş məlumata uyğun blog postları axtarış edən qs yaradın :
+
+from blog.models import *
+blog = Blog.objects.all()
+Blog.objects.filter(title__contains='word to be searched')
+
+4) Daxil edilmiş məhsulla oxşar olan son dörd məhsulu qaytaran qs yazın :
+
+5) Ən populyar beş məhsul (product) taglərini qaytaran qs yazın :
+
+
+
+1.objects.exclude(name=)
+1.objects.filter(image__id=)
+1.objects.exclude(title__startswith='')
+1.objects.all()[:5]
+1.objects.all().order_by(name)
+choices = models.Charfield(choices = ((''),('')))

@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block content%}
+{% load static %}
+<!-- pages-title-start -->
+<div class="pages-title section-padding">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="pages-title-text text-center">
+					<h2>Blog</h2>
+					<ul class="text-left">
+						<li><a href="{% url 'home' %}">Home </a></li>
+						<li><span> // </span>Blog</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- pages-title-end -->
+<!-- blog section start -->
+<section class="latest-blog section-padding">
+	<div class="container">
+				<div class="row" id="post_data">
+					{% for i in blog%}
+					<div class="col-sm-4">
+						<div class="l-blog-text">
+							<div class="banner">
+						
+								<a href="{{i.slug}}"><img src="{{i.image.url}}" style="height:fit-content;max-height:auto"
+										alt="" /></a>
+							</div>
+							<div class="s-blog-text" style="max-height:200px">
+								<h4><a href='{{i.slug}}'>{{i.title}}</a></h4>
+								<span>By : {{i.author}}| <a href="#">210 Like</a> | <a href="#">69 Comments</a></span>
+								<h6>{{i.category}}</h6>
+								<p style="max-height: 60px;overflow: hidden;">{{i.text}}</p>
+							</div>
+							<div class="date-read clearfix">
+								<a href="#"><i class="mdi mdi-clock"></i> {{i.created_at}}</a>
+								<a href=#>read more</a>
+							</div>
+						</div>
+					</div>
+					{%endfor%}
+					
+				</div>
+		{% if is_paginated %}
+		<ul class="pagination">
+			{% if page_obj.has_previous %}
+			<li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+			{% else %}
+			<li class="disabled"><span>&laquo;</span></li>
+			{% endif %}
+			{% for i in paginator.page_range %}
+			{% if page_obj.number == i %}
+			<li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+			{% else %}
+			<li><a href="?page={{ i }}">{{ i }}</a></li>
+			{% endif %}
+			{% endfor %}
+			{% if page_obj.has_next %}
+			<li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+			{% else %}
+			<li class="disabled"><span>&raquo;</span></li>
+			{% endif %}
+		</ul>
+		{% endif %}
+	</div>
+</section>
+<!-- blog section end -->
+<!-- footer section start -->
+<script src="{% static 'js/fetch_products.js' %}"></script>
+
+{% endblock %}
