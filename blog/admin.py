@@ -10,6 +10,6 @@ class BlogAdmin(admin.ModelAdmin):
     
 
 admin.site.register(Blog,BlogAdmin)
-admin.site.register(Comments)
+admin.site.register(Comment)
 admin.site.register(BlogStatistic)
 admin.site.register(BlockedIP)

@@ -2,7 +2,7 @@ from django.utils.translation import gettext_lazy as _
 from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+import os
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-hn^-(8cyozfq7k^t#m5utj=f2wd42y3x+an@xq$lggs43ejn*f'
@@ -38,10 +38,16 @@ INSTALLED_APPS = [
     'django_filters',
     'crispy_forms',
     'star_ratings',
+    'dbbackup',
+    "corsheaders",
+
 ]
 
 
+DBBACKUP_STORAGE = 'django.core.files.storage.FileSystemStorage'
+DBBACKUP_STORAGE_OPTIONS = {'location': '/backups/'}
 MIDDLEWARE = [
+
     'blog.middlewares.BlockIPMiddleware',
     'request_logging.middleware.LoggingMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -53,28 +59,30 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'social_django.middleware.SocialAuthExceptionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 
 ]
+CORS_ALLOW_ALL_ORIGINS = True
 
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'file': {
-            'level': 'INFO',
-            'class': 'logging.FileHandler',
-            'filename': 'sellshop/middlewares/logs.txt',
-        },
-    },
-    'loggers': {
-        'django.request': {
-            'handlers': ['file'],
-            'level': 'INFO',  # change debug level as appropiate
-            'propagate': True,
-        },
-    },
-}
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'handlers': {
+#         'file': {
+#             'level': 'INFO',
+#             'class': 'logging.FileHandler',
+#             'filename': 'sellshop/middlewares/logs.txt',
+#         },
+#     },
+#     'loggers': {
+#         'django.request': {
+#             'handlers': ['file'],
+#             'level': 'INFO',  # change debug level as appropiate
+#             'propagate': True,
+#         },
+#     },
+# }
 
 ROOT_URLCONF = 'sellshop.urls'
 
@@ -90,7 +98,8 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'social_django.context_processors.backends',
-                'social_django.context_processors.login_redirect'
+                'social_django.context_processors.login_redirect',
+                'tools.context.main_context'
             ],
         },
     },
@@ -106,11 +115,15 @@ WSGI_APPLICATION = 'sellshop.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.environ.get("DB_NAME"),
+        'USER': os.environ.get("DB_USER"),
+        'PASSWORD': os.environ.get("DB_PASSWORD"),
+        'HOST': os.environ.get("DB_HOST"),
+        'PORT': os.environ.get("DB_PORT"),
+        
     }
 }
 
@@ -183,15 +196,16 @@ SOCIAL_AUTH_LOGIN_URL = '/'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
-    #    'DEFAULT_PERMISSION_CLASSES': ( 'rest_framework.permissions.IsAdminUser', ),
 }
 
 CELERY_BROKER_URL = "redis://localhost:6379"
-CELERY_RESULT_BACKEND = "redis://localhost:6379"
-
+CELERY_RESULT_BACKEND ="redis://localhost:6379"
 CELERY_TIMEZONE = "Asia/Baku"
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_TRACK_STARTED = True
 # CELERY_TASK_TIME_LIMIT = 30 * 60
 
@@ -200,3 +214,5 @@ REST_REGISTRATION = {
     'RESET_PASSWORD_VERIFICATION_ENABLED': False,
     'REGISTER_EMAIL_VERIFICATION_ENABLED': False,
 }
+
+

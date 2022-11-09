@@ -7,15 +7,15 @@
 	<div id="wrapper">
 		<div class="slider-wrapper">
 			<div id="mainSlider" class="nivoSlider">
-				<img src="{% static 'img/products/Fashion2021.webp' %}" alt="main slider" title="#htmlcaption" />
-				<img src="{% static 'img/products/fashion.webp' %}" alt="main slider" title="#htmlcaption2" />
+				<img src="{% static 'img/collect/collection1.webp' %}" alt="main slider" title="#htmlcaption" />
+				<img src="{% static 'img/collect/collection2.jpeg' %}" alt="main slider" title="#htmlcaption2" />
 			</div>
 			<div id="htmlcaption" class="nivo-html-caption slider-caption">
 				<div class="container">
 					<div class="slider-left slider-right">
 						<div class="slide-text animated zoomInUp">
 							<h3>new collection</h3>
-							<h1>Men’s Fashion 2022</h1>
+							<h1>Men’s Fashion 2022 </h1>
 						</div>
 						<div class="animated slider-btn fadeInUpBig">
 							<a class="shop-btn" href="{% url '404' %}">Shop now</a>
@@ -28,7 +28,7 @@
 					<div class="slider-left two-caption-text slider-right">
 						<div class="slide-text animated zoomInUp">
 							<h3>new collection</h3>
-							<h1>Men’s Fashion 2022</h1>
+							<h1>Men’s Fashion 2022 </h1>
 							<span>Starting at $65.00. Don’t miss out!</span>
 						</div>
 						<div class="one-p animated bounceInLeft">
@@ -49,6 +49,7 @@
 <section class="collection-area collection-area2 section-padding">
 	<div class="container">
 		<div class="row">
+			{{responsee}}
 
 			<div class="col-sm-6">
 				<div class="colect-text ">
@@ -86,32 +87,30 @@
 			</div>
 		</div>
 		<div class="wrapper">
-			<ul class="load-list load-list-one">
-				<li>
-					<div class="row text-center">
+					<div class="row text-center nowrap" style="max-height:200px">
 						{% for product in products%}
 						{% for product_version in product_versions%}
-						{%if product.title == product_version.product.title%}
 
-						<div class="col-xs-12 col-sm-6 col-md-4 " id="post_data">
-							<div class="single-product">
-								<div class="product-img">
+						{%if product.title == product_version.product.title%}
+						<div class="col-xs-12 col-sm-6 col-md-4 "  id="post_data">
+							<div class="single-product" >
+								<div class="product-img" >
 
 									<a href="/{{product_version.slug}}/">
 
-										<img class="cover-image" src="{{product.cover_image.url}}" alt="Product Title" />
+										<img class="cover-image img-fluid"  src="{{product.cover_image}}" alt="Product Title" />
 									</a>
 									<div class="actions-btn">
 										<a href="/{{product_version.slug}}/"><i
 												class="mdi mdi-cart"></i></a>
-										<a href="/{{product_version.slug}}/" data-toggle="modal"
-											data-target="#quick-view"><i class="mdi mdi-eye"></i></a>
+										<a href="#{{product_version.id}}quick-view" data-toggle="modal"
+											data-target="#{{product_version.id}}quick-view"><i class="mdi mdi-eye"></i></a>
 										<a href="/{{product_version.slug}}/"><i
 												class="mdi mdi-heart"></i></a>
 									</div>
 								</div>
 								<div class="product-dsc">
-									<p><a href="/{{product_version.slug}}/">{{product_version.product}}</a>
+									<p><a href="/{{product_version.slug}}/">{{product_version.product.title}}</a>
 									</p>
 									<span>${{product_version.price}}</span>
 								</div>
@@ -123,8 +122,7 @@
 						  {{ "-->" }}
 						{% endfor %}
 					</div>
-				</li>
-			</ul>
+			
 		</div>
 	</div>
 </section>
@@ -270,13 +268,13 @@
 													src="{{new_product.cover_image.url}}" alt="Product Title" /></a>
 											<div class="actions-btn">
 												<a href="#"><i class="mdi mdi-cart"></i></a>
-												<a href="#" data-toggle="modal" data-target="#quick-view"><i
+												<a href="#" data-toggle="modal" data-target="#{{product_version.id}}quick-view"><i
 														class="mdi mdi-eye"></i></a>
 												<a href="#"><i class="mdi mdi-heart"></i></a>
 											</div>
 										</div>
 										<div class="product-dsc">
-											<p><a href="{{product_version.product}}">{{product_version.product}}</a></p>
+											<p><a href="{{product_version.product}}">{{product_version.product.title}}</a></p>
 											<span>${{product_version.price}}</span>
 										</div>
 									</div>
@@ -304,7 +302,7 @@
 													src="{% static 'img/products/16.jpg' %}" alt="Product Title" /></a>
 											<div class="actions-btn">
 												<a href="#"><i class="mdi mdi-cart"></i></a>
-												<a href="#" data-toggle="modal" data-target="#quick-view"><i
+												<a href="#" data-toggle="modal" data-target="#{{product_version.id}}quick-view"><i
 														class="mdi mdi-eye"></i></a>
 												<a href="#"><i class="mdi mdi-heart"></i></a>
 											</div>
@@ -334,7 +332,7 @@
 													alt="Product Title" /></a>
 											<div class="actions-btn">
 												<a href="#"><i class="mdi mdi-cart"></i></a>
-												<a href="#" data-toggle="modal" data-target="#quick-view"><i
+												<a href="#" data-toggle="modal" data-target="#{{product_version.id}}quick-view"><i
 														class="mdi mdi-eye"></i></a>
 												<a href="#"><i class="mdi mdi-heart"></i></a>
 											</div>
@@ -388,10 +386,174 @@
 							</div>
 						</div>
 						{% endfor %}
+						{% if is_paginated %}
+						<ul class="pagination">
+						  {% if page_obj.has_previous %}
+							<li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+						  {% else %}
+							<li class="disabled"><span>&laquo;</span></li>
+						  {% endif %}
+						  {% for i in paginator.page_range %}
+							{% if page_obj.number == i %}
+							  <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+							{% else %}
+							  <li><a href="?page={{ i }}">{{ i }}</a></li>
+							{% endif %}
+						  {% endfor %}
+						  {% if page_obj.has_next %}
+							<li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+						  {% else %}
+							<li class="disabled"><span>&raquo;</span></li>
+						  {% endif %}
+						</ul>
+					  {% endif %}
 					</div>
 				</li>
 			</ul>
 		</div>
 	</div>
 </section>
+
+
+{% for product_version in product_versions%}
+
+<div class="product-details quick-view modal animated zoomInUp" id="{{product_version.id}}quick-view">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="d-table">
+					<div class="d-tablecell">
+						<div class="modal-dialog">
+							<div class="main-view modal-content">
+								<div class="modal-footer" data-dismiss="modal">
+									<span>x</span>
+								</div>
+								<div class="row">
+									<div class="col-xs-12 col-sm-5 col-md-4">
+										<div class="quick-image">
+											<div class="single-quick-image text-center">
+												<div class="list-img">
+													<div class="product-img tab-content">
+														<div class="simpleLens-container tab-pane fade in" id="sin-1">
+															<div class="pro-type">
+																<span>new</span>
+															</div>
+															<a class="simpleLens-image" data-lens-image="{{product_version.cover_image_version.url}}" href="#"><img src="{{product_version.cover_image_version.url}}" alt="" class="simpleLens-big-image"></a>
+														</div>
+														{% for images in image%}
+														{%if images.product_image.id == product_version.id%}
+																			<div class="simpleLens-container tab-pane fade in" id="q-sin-{{forloop.counter}}">
+																				<a class="simpleLens-image"
+																					data-lens-image="{{images.images.url}}" href="#"><img
+																						src="{{images.images.url}}" alt="aa"
+																						class="simpleLens-big-image"></a>
+																			</div>
+													
+														{%endif%} 
+													{%endfor%}
+												
+													</div>
+												</div>
+											</div>
+											<div class="quick-thumb">
+												<ul class="product-slider">
+													<li class="active"><a data-toggle="tab" href="#q-sin-1"> <img
+																src="{{product_version.cover_image_version.url}}" alt="quick view" /> </a></li>
+
+																{% for images in image%}
+																{%if images.product_image.id == product_version.id%}
+													<li ><a data-toggle="tab" href="#q-sin-{{forloop.counter}}"> <img
+																src="{{images.images.url}}" alt="small image" /> </a>
+													</li>
+
+													{%endif%} 
+
+								{%endfor%}
+												</ul>
+											</div>
+										</div>						
+									</div>
+									<div class="col-xs-12 col-sm-7 col-md-8">
+										<div class="quick-right">
+											<div class="list-text">
+												<h3>{{product_version.title}}</h3>
+												<span>Summer men’s fashion</span>
+												<div class="ratting floatright">
+													<p>( 27 Rating )</p>
+													<i class="mdi mdi-star"></i>
+													<i class="mdi mdi-star"></i>
+													<i class="mdi mdi-star"></i>
+													<i class="mdi mdi-star-half"></i>
+													<i class="mdi mdi-star-outline"></i>
+												</div>
+												<h5><del>${{product_version.price}}</del> ${{product_version.discount_price}}</h5>
+												<p>There are many variations of passages of Lorem Ipsum available, but the majority have be suffered alteration in some form, by injected humour, or randomised words which donot look even slightly believable. If you are going to use a passage of Lorem Ipsum, you neede be sure there isn't anything embarrassing hidden in the middle of text. Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+												<div class="all-choose">
+													<div class="s-shoose">
+														<h5>{{product_version.color_id.colors}}</h5>
+														<div class="color-select clearfix">
+															<span></span>
+															<span class="outline"></span>
+															<span></span>
+															<span></span>
+														</div>
+													</div>
+													<div class="s-shoose">
+														<h5>size</h5>
+														<div class="size-drop">
+															<div class="btn-group">
+																<button type="button" class="btn">XL</button>
+																<button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+																	<span class=""><i class="mdi mdi-chevron-down"></i></span>
+																</button>
+																<ul class="dropdown-menu">
+																	<li><a href="#">Xl</a></li>
+																	<li><a href="#">SL</a></li>
+																	<li><a href="#">S</a></li>
+																	<li><a href="#">L</a></li>
+																</ul>
+															</div>
+														</div>
+													</div>
+													<div class="s-shoose">
+														<h5>qty</h5>
+														<form action="#" method="POST">
+															<div class="plus-minus">
+																<a class="dec qtybutton">-</a>
+																<input type="text" value="02" name="qtybutton" class="plus-minus-box">
+																<a class="inc qtybutton">+</a>
+															</div>
+														</form>
+													</div>
+												</div>
+												<div class="list-btn">
+													<a href="#">add to cart</a>
+													<a href="#">wishlist</a>
+													<a href="{{product_version.id}}quick-view" data-toggle="modal"
+														data-target="{{product_version.id}}quick-view">zoom</a>
+												</div>
+												<div class="share-tag clearfix">
+													<ul class="blog-share floatleft">
+														<li><h5>share </h5></li>
+														<li><a href="#"><i class="mdi mdi-facebook"></i></a></li>
+														<li><a href="#"><i class="mdi mdi-twitter"></i></a></li>
+														<li><a href="#"><i class="mdi mdi-linkedin"></i></a></li>
+														<li><a href="#"><i class="mdi mdi-vimeo"></i></a></li>
+														<li><a href="#"><i class="mdi mdi-dribbble"></i></a></li>
+														<li><a href="#"><i class="mdi mdi-instagram"></i></a></li>
+													</ul>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{%endfor%}
 {% endblock %}

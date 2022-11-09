@@ -57,18 +57,19 @@ class Product(models.Model):
 class Product_version(models.Model):
     name = models.CharField(max_length = 100)
     color_id = models.ForeignKey(Color, on_delete=models.CASCADE, null=True,related_name='color_id')
-    size_id = models.ForeignKey(Size, on_delete=models.CASCADE, null=True,related_name='size_id')
+    size_id = models.ManyToManyField(Size)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     price = models.FloatField()
     stocks = models.IntegerField()
-    discount_price = models.CharField(max_length=250)
+    discount_price = models.FloatField(max_length=250)
     product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
     cover_image_version = models.ImageField(
         upload_to="Cover_images_version", unique=True, null=True)
     slug = models.SlugField(max_length=120, null=True, blank=True)
     more_info = models.TextField() 
     text = models.TextField()
+    product_view = models.IntegerField(default=0)
 
 
     def __str__(self):

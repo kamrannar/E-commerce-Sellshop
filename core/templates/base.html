@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load static %}
 
-<html class="no-js" lang="">
+<html class="no-js" lang="en">
 
 <head>
 	<meta charset="utf-8">
@@ -72,9 +72,13 @@
 		}
 	</style>
 	<script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
-	<script type="text/javascript">const csrftoken = Cookies.get('csrftoken');
+	<script type="text/javascript">
 		var user = '{{request.user.id}}';
-		var cart_id = '{{cart.user_id}}'; </script>
+		var cart_idd = '{{cart.user_id.id}}';
+		var cart_items_quantity="{{cart_items.filter.first.quantity}}";
+		var cart_id = '{{cart.id}}';
+		var product_version_id = parseInt('{{product_version.id}}')
+		</script>
 </head>
 
 <body>
@@ -142,47 +146,7 @@
 								<ul>
 									<li><a href="{% url 'home' %}">{% trans 'Home' %}</a>
 									</li>
-									<li><a href="{% url '404' %}">{% trans 'Shop' %}</a>
-										<ul class="magamenu">
-											<li class="banner"><a href="{% url '404' %}"><img
-														src="{% static 'img/maga1.png' %}" alt="" /></a></li>
-											<li>
-												<h5>{% trans 'men’s wear' %}</h5>
-												<ul>
-													<li><a href="#">{% trans 'Shirts & Top' %}</a></li>
-													<li><a href="#">{% trans 'Shoes' %}</a></li>
-													<li><a href="#">{% trans 'Dresses' %}</a></li>
-													<li><a href="#">{% trans 'Jeans' %}</a></li>
-													<li><a href="#">{% trans 'Sweaters' %}</a></li>
-													<li><a href="#">{% trans 'Jacket' %}</a></li>
-													<li><a href="#">{% trans 'Men Watch' %}</a></li>
-												</ul>
-											</li>
-											<li>
-												<h5>{% trans 'women’s wear' %}</h5>
-												<ul>
-													<li><a href="#">{% trans 'Shirts' %}</a></li>
-													<li><a href="#">{% trans 'Shoes' %}</a></li>
-													<li><a href="#">{% trans 'Dresses' %}</a></li>
-													<li><a href="#">{% trans 'Jeans' %}</a></li>
-													<li><a href="#">{% trans 'Sweaters' %}</a></li>
-													<li><a href="#">{% trans 'Jacket' %}</a></li>
-													<li><a href="#">{% trans 'Women Watch' %}</a></li>
-												</ul>
-											</li>
-											<li class="banner"><a href="{% url '404' %}"><img
-														src="{% static 'img/maga2.png' %}" alt="" /></a></li>
-										</ul>
-									</li>
-									<li><a href="#">{% trans 'Pages' %}</a>
-										<ul class="dropdown">
-											<li><a href="{% url 'wishlist' %}">{% trans 'Wishlist' %}</a></li>
-											<li><a href="{% url 'checkout' %}">{% trans 'Checkout' %}</a></li>
-											<li><a href="{% url 'cart' %}">{% trans 'Cart' %}</a></li>
-											<li><a href="{% url 'product_list' %}">{% trans 'Product List View' %}</a>
-											</li>
-											<li><a href="{% url '404' %}">{% trans '404 page' %}</a></li>
-										</ul>
+									<li><a href="{% url 'product_list' %}">{% trans 'Product List' %}</a>
 									</li>
 									<li><a href="{% url 'blog' %}">{% trans 'Blog' %}</a>
 									</li>
@@ -198,33 +162,6 @@
 									<ul>
 										<li><a href="{% url 'home' %}">{% trans 'Home' %}</a>
 										</li>
-										<li><a href="{% url '404' %}">{% trans 'Shop' %}</a>
-											<ul>
-												<li>
-													<h5>{% trans 'men’s wear' %}</h5>
-													<ul>
-														<li><a href="#">{% trans 'Shirts' %}</a></li>
-														<li><a href="#">{% trans 'Shoes' %}</a></li>
-														<li><a href="#">{% trans 'Dresses' %}</a></li>
-														<li><a href="#">{% trans 'Jeans' %}</a></li>
-														<li><a href="#">{% trans 'Sweaters' %}</a></li>
-														<li><a href="#">{% trans 'Jacket' %}</a></li>
-														<li><a href="#">{% trans 'Men Watch' %}</a></li>
-													</ul>
-												</li>
-												<li>
-													<h5>{% trans 'women’s wear' %}</h5>
-													<ul>
-														<li><a href="#">{% trans 'Shirts' %}</a></li>
-														<li><a href="#">{% trans 'Shoes' %}</a></li>
-														<li><a href="#">{% trans 'Dresses' %}</a></li>
-														<li><a href="#">{% trans 'Jeans' %}</a></li>
-														<li><a href="#">{% trans 'Sweaters' %}</a></li>
-														<li><a href="#">{% trans 'Jacket' %}</a></li>
-														<li><a href="#">{% trans 'Women Watch' %}</a></li>
-													</ul>
-												</li>
-											</ul>
 										</li>
 										<li><a href="#">{% trans 'men’s wear' %}Pages</a>
 											<ul>
@@ -252,14 +189,13 @@
 				<div class="col-sm-2">
 
 					<div class="cart-itmes">
-						<a class="cart-itme-a" id="cartitema" href="{% url 'home' %}">
+						<a class="cart-itme-a" id="sum and item" href="{% url 'home' %}">
 
 						</a>
-						<div class="cartdrop">
-							<div id="cartdrop"></div>
+						<div class="cartdrop" id="cartdrop">
 
-							<a class="goto" href="{% url 'home' %}">go to cart</a>
-							<a class="out-menu" href="{% url 'checkout' %}">Check out</a>
+
+
 						</div>
 					</div>
 				</div>
@@ -274,8 +210,8 @@
 		<!-- social media section start -->
 		<div class="social-media section-padding">
 			<div class="container">
-				<div class="row">
-					<div class="col-sm-12">
+				<div class="row ">
+					<div class="col-sm-8 col-md-7">
 						<div class="newsletter newsletter2">
 							<h3>{% trans 'men’s wear' %} newsletter</h3>
 							<form action="#" method="post" id="subscription-form">
@@ -292,99 +228,57 @@
 							<a href="#"><i class="mdi mdi-rss"></i></a>
 						</div>
 					</div>
-
-				</div>
-			</div>
-		</div>
-		<!-- social media section end -->
-		<!-- footer-top area start -->
-		<div class="footer-top section-padding">
-			<div class="footer-dsc">
-				<div class="container">
-					<div class="row">
-						<div class="col-xs-12 col-sm-6 col-md-4">
-							<div class="single-text">
-								<div class="footer-title">
-									<h4>{% trans 'Contact us' %}</h4>
-								</div>
-								<div class="footer-text">
-									<ul>
-										<li>
-											<i class="mdi mdi-map-marker"></i>
-											<p>{% trans 'Baku' %}</p>
-											<p>{% trans 'Azerbaijan' %}</p>
-										</li>
-										<li>
-											<i class="mdi mdi-phone"></i>
-											<p>(+880) 19453 821758</p>
-											<p>(+880) 19453 813758</p>
-										</li>
-										<li>
-											<i class="mdi mdi-email"></i>
-											<p>info@mydomain.com</p>
-											<p>username@email.com</p>
-										</li>
-									</ul>
-								</div>
+					<div class="col-xs-12 col-sm-3 col-md-2" style="margin-left: 40px;">
+						<div class="single-text">
+							<div class="footer-title">
+								<h4>{% trans 'Contact us' %}</h4>
+							</div>
+							<div class="footer-text">
+								<ul>
+									<li>
+										<i class="mdi mdi-map-marker"></i>
+										<p>{% trans 'Baku' %}</p>
+										<p>{% trans 'Azerbaijan' %}</p>
+									</li>
+									<li>
+										<i class="mdi mdi-phone"></i>
+										<p>(+994) 51 731 12 80</p>
+										<p>(+880) 19453 813758</p>
+									</li>
+									<li>
+										<i class="mdi mdi-email"></i>
+										<p>kamrann.nariman@gmail.com</p>
+										<p>username@email.com</p>
+									</li>
+								</ul>
 							</div>
 						</div>
-						<div class="col-xs-12 col-sm-3 col-md-4 wide-mobile">
-							<div class="single-text">
-								<div class="footer-title">
-									<h4>{% trans 'my account' %}</h4>
-								</div>
-								<div class="footer-menu">
-									<ul>
-										<li><a href="{% url 'login' %}"><i class="mdi mdi-menu-right"></i>{% trans
-												'MyAccount' %}</a>
-										</li>
-										<li><a href="{% url 'wishlist' %}"><i class="mdi mdi-menu-right"></i>{% trans'My
-												Wishlist' %}
-											</a></li>
-										<li><a href="{% url 'home' %}"><i class="mdi mdi-menu-right"></i>{% trans
-												'MyCart' %}</a>
-										</li>
-										<li><a href="{% url 'login' %}"><i class="mdi mdi-menu-right"></i>{% trans 'Sign
-												In' %}</a>
-										</li>
-										<li><a href="{% url 'checkout' %}"><i class="mdi mdi-menu-right"></i>{% trans
-												'Checkout' %}
-											</a></li>
-										<li><a href="#"><i class="mdi mdi-menu-right"></i>{% trans 'Track My Order' %}
-											</a></li>
-									</ul>
-								</div>
+					</div>
+					<div class="col-xs-12 col-sm-1 col-md-2 wide-mobile " style="margin-left: 20px;">
+						<div class="single-text">
+							<div class="footer-title">
+								<h4>{% trans 'my account' %}</h4>
 							</div>
-						</div>
-						<div class="col-xs-12 col-sm-6 col-md-4 r-margin-top wide-mobile">
-							<div class="single-text">
-								<div class="footer-title">
-									<h4>instagram</h4>
-								</div>
-								<div class="clearfix instagram">
-									<ul>
-										<li><a href="#"><img src="{% static 'img/footer/in1.png' %}"
-													alt="Instagram" /></a></li>
-										<li><a href="#"><img src="{% static 'img/footer/in2.png' %}"
-													alt="Instagram" /></a></li>
-										<li><a href="#"><img src="{% static 'img/footer/in3.png' %}"
-													alt="Instagram" /></a></li>
-										<li><a href="#"><img src="{% static 'img/footer/in4.png' %}"
-													alt="Instagram" /></a></li>
-										<li><a href="#"><img src="{% static 'img/footer/in5.png' %}"
-													alt="Instagram" /></a></li>
-										<li><a href="#"><img src="{% static 'img/footer/in6.png' %}"
-													alt="Instagram" /></a></li>
-									</ul>
-								</div>
+							<div class="footer-menu">
+								<ul>
+									<li><a href="{% url 'login' %}"><i class="mdi mdi-menu-right"></i>{% trans 'My Account' %}</a>
+									</li>
+									<li><a href="{% url 'wishlist' %}"><i class="mdi mdi-menu-right"></i>{% trans 'My Wishlist' %}
+										</a></li>
+									<li><a href="{% url 'home' %}"><i class="mdi mdi-menu-right"></i>{% trans 'My Cart' %}</a>
+									</li>
+									<li><a href="{% url 'login' %}"><i class="mdi mdi-menu-right"></i>{% trans 'Sign In' %}</a>
+									</li>
+									<li><a href="{% url 'checkout' %}"><i class="mdi mdi-menu-right"></i>{% trans 'Checkout' %}
+										</a></li>
+								</ul>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<!-- footer-top area end -->
-		<!-- footer-bottom area start -->
+
 		<div class="footer-bottom">
 			<div class="container">
 				<div class="row">
@@ -424,10 +318,9 @@
 	<!-- plugins js -->
 	<script src="{% static 'js/plugins.js' %}"></script>
 	<!-- main js -->
-	<script src="{% static 'js/main.js' %}"></script>
-	<script src="{% static 'js/subscribe_email.js' %}"></script>
 	<script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
-	<script src="{% static 'js/fetch_products.js' %}"></script>
+	<script src="{% static 'js/main.js' %}"></script>
+	
 
 </body>
 

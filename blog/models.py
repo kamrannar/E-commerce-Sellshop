@@ -22,7 +22,7 @@ class Blog(models.Model):
         super(Blog, self).save(*args, **kwargs)
 
 
-class Comments(models.Model):
+class Comment(models.Model):
     name = models.CharField(max_length=250)
     email = models.EmailField(max_length=250)
     comment = models.TextField(max_length=250)

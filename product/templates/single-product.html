@@ -32,17 +32,17 @@
 						<div class="single-quick-image text-center">
 							<div class="list-img">
 								<div class="product-img tab-content">
-									<div class="simpleLens-container tab-pane active fade in" id="sin-1">
+									<div class="simpleLens-container tab-pane fade in active" id="sin-1">
 										<a class="simpleLens-image"
 											data-lens-image="{{product_version.cover_image_version.url}}" href="#"><img
 												src="{{product_version.cover_image_version.url}}" alt=""
 												class="simpleLens-big-image"></a>
 									</div>
-									<div class="simpleLens-container tab-pane  fade in" id="sin-2">
+									<div class="simpleLens-container tab-pane  fade in" id="sin-3">
 										<a class="simpleLens-image" data-lens-image="{{image}}" href="#"><img
 												src="{{image}}" alt="" class="simpleLens-big-image"></a>
 									</div>
-									<div class="simpleLens-container tab-pane  fade in" id="sin-3">
+									<div class="simpleLens-container tab-pane  fade in" id="sin-4">
 										<a class="simpleLens-image" data-lens-image="{{image2}}" href="#"><img
 												src="{{image2}}" alt="" class="simpleLens-big-image"></a>
 									</div>
@@ -55,20 +55,23 @@
 											src="{{product_version.cover_image_version.url}}"
 											alt="{{product_version.cover_image_version.url}}" /></a>
 								</li>
-								<li><a data-toggle="tab" href="#sin-2"> <img src="{{image}}" alt="quick view" /></a>
+								<li><a data-toggle="tab" href="#sin-3"> <img src="{{image}}" alt="quick view" /></a>
 								</li>
-								<li><a data-toggle="tab" href="#sin-3"> <img src="{{image2}}" alt="quick view" /></a>
+								<li><a data-toggle="tab" href="#sin-4"> <img src="{{image2}}" alt="quick view" /></a>
 								</li>
 							</ul>
 						</div>
 					</div>
 				</div>
+				{{a}}
+				{% for b in a%}
+				{{b}}
+				{%endfor%}
 				<div class="col-xs-12 col-sm-7 col-md-8">
 					<div class="quick-right">
 						<div class="list-text">
-							<h3>{{ product_version.name }}</h3>
+							<h3> {{ product_version.name }}  </h3>
 							<div class="ratting floatright">
-								{% ratings product_version %}
 							</div>
 							<h5><del>$ {{product_version.price}}</del> $ {{product_version.discount_price}}</h5>
 							<p>{{product_version.text}}</p>
@@ -88,33 +91,35 @@
 									<h5>size</h5>
 									<div class="size-drop">
 										<div class="btn-group">
-											<button type="button" class="btn">{{product_version.size_id.sizes}}</button>
+											<button type="button" class="btn">
+												{%for i in product_version.size_id.all%}
+												{{i}}
+												<!--" 
+									
+								  {%endfor%}     
+								   "-->
+
+											</button>
 											<button type="button" class="btn dropdown-toggle" data-toggle="dropdown"
 												aria-haspopup="true" aria-expanded="false">
 												<span class=""><i class="mdi mdi-chevron-down"></i></span>
 											</button>
 											<ul class="dropdown-menu">
-												<li><a href="#">{{product_version.size_id.sizes}}</a></li>
+												{%for i in product_version.size_id.all%}
+
+												<li><a href="#">{{i}}</a></li>
+												{%endfor%}
 											</ul>
 										</div>
 									</div>
 								</div>
-								<div class="s-shoose">
-									<h5>qty</h5>
-									<!-- <form action="#" method="POST">
-										<div class="plus-minus">
-											<a class="dec qtybutton">-</a>
-											<input type="text" value="02" name="qtybutton" class="plus-minus-box">
-											<a class="inc qtybutton">+</a>
-										</div>
-									</form> -->
-								</div>
+
 							</div>
 							<div class="list-btn">
-								<a href="#" class="update-cart" id="update-cart" data-product="{{product_version.id}}"
-									data-action="add">add to cart </a>
-								<a href="#">wishlist</a>
-								<a href="#" data-toggle="modal" data-target="#quick-view">zoom</a>
+								<a class="update-cart" id="update-cart"
+									  data-cart_itemss="{{cart_itemss.id}}">add to cart </a>
+								<a class="wishlist" data-cart_itemss="{{cart_itemss.id}}">wishlist</a>
+								<a href="#" data-toggle="modal" data-target="#{{product_version.id}}quick-view">zoom</a>
 							</div>
 							<div class="share-tag clearfix">
 								<ul class="blog-share floatleft">
@@ -224,8 +229,7 @@
 							</div>
 						</div>
 						<div class="info-reviews tags tab-pane fade in" id="tags">
-							{%for i in tag%}<h3>{{i}}
-							</h3>{%endfor%}
+							{%for i in tag%}<h4>{{i}}</h4>{%endfor%}
 						</div>
 					</div>
 				</div>
@@ -254,16 +258,17 @@
 						<div class="pro-type">
 							<span>new</span>
 						</div>
-						<a href="/{{product.slug}}/"><img src="{{product.cover_image_version.url}}" alt="{{product}}" /></a>
+						<a href="/{{product.slug}}/"><img src="{{product.cover_image_version.url}}"
+								alt="{{product}}" /></a>
 						<div class="actions-btn">
-							<a href="#"><i class="mdi mdi-cart"></i></a>
-							<a href="#" data-toggle="modal" data-target="#quick-view"><i class="mdi mdi-eye"></i></a>
+							<a href="" class="update-cart"><i class="mdi mdi-cart"></i></a>
+							<a href="#" data-toggle="modal" data-target="#{{product_version.id}}quick-view"><i class="mdi mdi-eye"></i></a>
 							<a href="#"><i class="mdi mdi-heart"></i></a>
 						</div>
 					</div>
 					<div class="product-dsc">
 						<p><a href="/{{product.slug}}/">{{product.name}}</a></p>
-						<span>$ {{product.price}}</span>
+						<span>$ {{product.price}} </span>
 					</div>
 				</div>
 			</div>
@@ -274,7 +279,9 @@
 </section>
 <!-- related-products section end -->
 <!-- quick view start -->
-<div class="product-details quick-view modal animated zoomInUp" id="quick-view">
+{% for product_versio in product_versions%}
+
+<div class="product-details quick-view modal animated zoomInUp" id="{{product_version.id}}quick-view">
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-12">
@@ -286,64 +293,51 @@
 									<span>x</span>
 								</div>
 								<div class="row">
+									
+
 									<div class="col-xs-12 col-sm-5 col-md-4">
 										<div class="quick-image">
 											<div class="single-quick-image text-center">
 												<div class="list-img">
 													<div class="product-img tab-content">
-														<div class="simpleLens-container tab-pane fade in" id="q-sin-1">
-															<div class="pro-type">
-																<span>new</span>
-															</div>
+														<div class="simpleLens-container tab-pane fade in active" id="q-sin-1">
 															<a class="simpleLens-image"
-																data-lens-image="img/products/z1.jpg" href="#"><img
-																	src="{% static 'img/products/z1.jpg' %}" alt=""
+																data-lens-image="{{product_versio.cover_image_version.url}}" href="#"><img
+																	src="{{product_versio.cover_image_version.url}}" alt="aa"
 																	class="simpleLens-big-image"></a>
 														</div>
-														<div class="simpleLens-container tab-pane active fade in"
-															id="q-sin-2">
-															<div class="pro-type sell">
-																<span>sell</span>
-															</div>
+
+														{% for imag in images%}
+									{%if imag.product_image.id == product_versio.id%}
+														<div class="simpleLens-container tab-pane fade in" id="q-sin-{{forloop.counter}}">
 															<a class="simpleLens-image"
-																data-lens-image="img/products/z2.jpg" href="#"><img
-																	src="{% static 'img/products/z2.jpg' %}" alt=""
+																data-lens-image="{{imag.images.url}}" href="#"><img
+																	src="{{imag.images.url}}" alt="aa"
 																	class="simpleLens-big-image"></a>
 														</div>
-														<div class="simpleLens-container tab-pane fade in" id="q-sin-3">
-															<div class="pro-type">
-																<span>-15%</span>
-															</div>
-															<a class="simpleLens-image"
-																data-lens-image="img/products/z3.jpg" href="#"><img
-																	src="{% static 'img/products/z3.jpg' %}" alt=""
-																	class="simpleLens-big-image"></a>
-														</div>
-														<div class="simpleLens-container tab-pane fade in" id="q-sin-4">
-															<div class="pro-type">
-																<span>new</span>
-															</div>
-															<a class="simpleLens-image"
-																data-lens-image="img/products/z4.jpg" href="#"><img
-																	src="{% static 'img/products/z4.jpg' %}" alt=""
-																	class="simpleLens-big-image"></a>
-														</div>
+								
+									{%endif%} 
+								{%endfor%}
+
+									
 													</div>
 												</div>
 											</div>
+											
 											<div class="quick-thumb">
 												<ul class="product-slider">
-													<li><a data-toggle="tab" href="#q-sin-1"> <img src="{{image}}"
-																alt="quick view" /> </a></li>
-													<li class="active"><a data-toggle="tab" href="#q-sin-2"> <img
-																src="{% static 'img/products/s2.jpg' %}"
-																alt="small image" /> </a></li>
-													<li><a data-toggle="tab" href="#q-sin-3"> <img
-																src="{% static 'img/products/s3.jpg' %}"
-																alt="small image" /> </a></li>
-													<li><a data-toggle="tab" href="#q-sin-4"> <img
-																src="{% static 'img/products/s4.jpg' %}"
-																alt="small image" /> </a></li>
+													<li class="active"><a data-toggle="tab" href="#q-sin-1"> <img
+																src="{{product_versio.cover_image_version.url}}" alt="quick view" /> </a></li>
+
+																{% for imag in images%}
+																{%if imag.product_image.id == product_version.id%}
+													<li ><a data-toggle="tab" href="#q-sin-{{forloop.counter}}"> <img
+																src="{{imag.images.url}}" alt="small image" /> </a>
+													</li>
+
+													{%endif%} 
+
+								{%endfor%}
 												</ul>
 											</div>
 										</div>
@@ -351,8 +345,7 @@
 									<div class="col-xs-12 col-sm-7 col-md-8">
 										<div class="quick-right">
 											<div class="list-text">
-												<h3>men’s White t-shirt</h3>
-												<span>Summer men’s fashion</span>
+												<h3>{{product_versio.name}}</h3>
 												<div class="ratting floatright">
 													<p>( 27 Rating )</p>
 													<i class="mdi mdi-star"></i>
@@ -361,17 +354,11 @@
 													<i class="mdi mdi-star-half"></i>
 													<i class="mdi mdi-star-outline"></i>
 												</div>
-												<h5><del>$79.30</del> $69.30</h5>
-												<p>There are many variations of passages of Lorem Ipsum available, but
-													the majority have be suffered alteration in some form, by injected
-													humour, or randomised words which donot look even slightly
-													believable. If you are going to use a passage of Lorem Ipsum, you
-													neede be sure there isn't anything embarrassing hidden in the middle
-													of text. Lorem Ipsum is simply dummy text of the printing and
-													typesetting industry.</p>
+												<h5><del>${{product_versio.price}}</del> ${{product_versio.discount_price}}</h5>
+												<p>{{product_versio.text}}</p>
 												<div class="all-choose">
 													<div class="s-shoose">
-														<h5>Color</h5>
+											<h5>{{product_versio.color_id.colors}}</h5>
 														<div class="color-select clearfix">
 															<span></span>
 															<span class="outline"></span>
@@ -383,7 +370,7 @@
 														<h5>size</h5>
 														<div class="size-drop">
 															<div class="btn-group">
-																<button type="button" class="btn">XL</button>
+																<button type="button" class="btn">{{product_versio.size_id.sizes}}</button>
 																<button type="button" class="btn dropdown-toggle"
 																	data-toggle="dropdown" aria-haspopup="true"
 																	aria-expanded="false">
@@ -401,20 +388,21 @@
 													</div>
 													<div class="s-shoose">
 														<h5>qty</h5>
-														<!-- <form action="#" method="POST">
+														<form action="#" method="POST">
 															<div class="plus-minus">
 																<a class="dec qtybutton">-</a>
 																<input type="text" value="02" name="qtybutton"
 																	class="plus-minus-box">
 																<a class="inc qtybutton">+</a>
 															</div>
-														</form> -->
+														</form>
 													</div>
 												</div>
 												<div class="list-btn">
-													<a href="#" class="update-cart">add to cart</a>
+													<a href="#">add to cart</a>
 													<a href="#">wishlist</a>
-													<a href="#">zoom</a>
+													<a href="#{{product_versio.id}}quick-view" data-toggle="modal"
+														data-target="#{{product_version.id}}quick-view">zoom</a>
 												</div>
 												<div class="share-tag clearfix">
 													<ul class="blog-share floatleft">
@@ -432,6 +420,7 @@
 											</div>
 										</div>
 									</div>
+						
 								</div>
 							</div>
 						</div>
@@ -441,5 +430,6 @@
 		</div>
 	</div>
 </div>
+{%endfor%}
 <!-- quick view end -->
 {% endblock %}

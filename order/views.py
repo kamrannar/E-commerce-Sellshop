@@ -1,9 +1,4 @@
 from django.shortcuts import render
-import json
-from django.http import JsonResponse
-from order.models import Cart_items
-from product.models import Product
-
 
 
 def order_complete(request):
@@ -14,7 +9,4 @@ def order_complete(request):
 def wishlist(request):
     return render(request, 'wishlist.html')
 
-
-def cart(request):
-    return render(request, 'cart.html')
 

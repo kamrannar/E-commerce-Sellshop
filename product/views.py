@@ -1,4 +1,3 @@
-from unicodedata import category
 from sellshop.tasks import heavy_process
 from .models import *
 from django.views.generic import DetailView, ListView
@@ -12,26 +11,22 @@ from django.shortcuts import redirect
 from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib import messages
 from . forms import *
-import json
 
-class product_list(ListView):
+class ProductListView(ListView):
     model = Product
     template_name = 'product-list.html'
     context_object_name = 'products'
 
     def get_context_data(self, **kwargs):
-        context = super(product_list, self).get_context_data(**kwargs)
-        context['categories'] = Category.objects.all()
-        context['product_versions'] = Product_version.objects.all()
-        context['brands'] = Brand.objects.all()
-        context['sizes'] = Size.objects.all()
-        context['colors'] = Color.objects.all()
+        context = super(ProductListView, self).get_context_data(**kwargs)
+        context['best_brand'] = Product_version.objects.order_by(
+            '-product_view')[0]
         return context
 
     def get_queryset(self, *args, **kwargs):
         size = self.request.GET.get('product_size')
         brands = self.request.GET.get('brand_id')
-        categories = self.request.GET.get('category_id')
+        categoriess = self.request.GET.get('category_id')
         colors = self.request.GET.get('product_color')
         if size:
             queryset = Product.objects.filter(product_size=size)
@@ -39,33 +34,35 @@ class product_list(ListView):
             queryset = Product.objects.filter(brand_id=brands)
         elif colors:
             queryset = Product.objects.filter(product_color=colors)
-        elif categories:
-            queryset = Product.objects.filter(category_id=categories)
+        elif categoriess:
+            queryset = Product.objects.filter(category_id=categoriess)
         else:
             queryset = Product.objects.all()
         return queryset
 
 
-class single_product(FormMixin, DetailView):
+class SingleProductView(FormMixin, DetailView):
     model = Product_version
     template_name = 'single-product.html'
     form_class = ReviewForm
 
     def get_context_data(self, **kwargs):
-
-        context = super(single_product, self).get_context_data(**kwargs)
+        context = super(SingleProductView, self).get_context_data(**kwargs)
         context['image'] = Image.objects.filter(
             product_image=self.object).first().images.url
         context['image2'] = Image.objects.filter(
             product_image=self.object).last().images.url
         context['products_version'] = Product_version.objects.filter(
             product=self.object.product)
-
         context['products_version_related'] = Product_version.objects.filter(
             product=self.object.product).exclude(slug=self.kwargs['slug'])
         context['image_related'] = Product_version
         context['tag'] = Tag.objects.filter(tags=self.object.product.id)
         context['reviews'] = Review.objects.filter(products_id=self.object.id)
+        context['sum'] = 0
+        view_object = Product_version.objects.get(slug=self.kwargs['slug'])
+        view_object.product_view = view_object.product_view+1
+        view_object.save()
         return context
 
     def post(self, request, **kwargs):
@@ -78,6 +75,7 @@ class single_product(FormMixin, DetailView):
             return HttpResponseRedirect(self.request.path_info)
         else:
             messages.warning(request, 'Please correct the errors below')
+    
 
 @api_view(["GET", "POST"])
 def product_listt(request, format=None):

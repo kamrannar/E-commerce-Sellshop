@@ -70,31 +70,29 @@
 										</tr>
 									</thead>
 									<tbody>
+										{%for cart_item in cart_items%}
 										<tr>
-											<th>Men’s White Shirt  x 2</th>
-											<td>$86.00</td>
+											<th>{{cart_item.product_version_id.name}} x {{cart_item.quantity}} </th>
+											<td>${%widthratio cart_item.quantity 1 cart_item.product_version_id.discount_price%}</td>
 										</tr>
-										<tr>
-											<th>Men’s Black Shirt  x 1</th>
-											<td>$69.00</td>
-										</tr>
+										{%endfor%}
 										<tr>
 											<th>Cart Subtotal</th>
-											<td>$155.00</td>
+											<td id="subtotal"></td>
 										</tr>
 										<tr>
 											<th>Shipping and Handing</th>
-											<td>$15.00</td>
+											<td id="shipping"></td>
 										</tr>
 										<tr>
 											<th>Vat</th>
-											<td>$00.00</td>
+											<td id="vat"></td>
 										</tr>
 									</tbody>
 									<tfoot>
 										<tr>
 											<th>Order total</th>
-											<td>$325.00</td>
+											<td id="order_total"></td>
 										</tr>
 									</tfoot>
 								</table>
@@ -115,18 +113,6 @@
 											</div>
 										</div>
 										<div class="panel-collapse collapse in" id="collapse1">
-											<div class="normal-a">
-												<p>Lorem Ipsum is simply in dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry.</p>
-											</div>
-										</div>
-									</li>
-									<li class="panel">
-										<div data-toggle="collapse" data-parent="#accordion" data-target="#collapse2">
-											<div class="medium-a">
-												cheque payment
-											</div>
-										</div>
-										<div class="paypal-dsc panel-collapse collapse" id="collapse2">
 											<div class="normal-a">
 												<p>Lorem Ipsum is simply in dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry.</p>
 											</div>

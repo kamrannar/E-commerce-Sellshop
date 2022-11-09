@@ -1162,7 +1162,7 @@ footer ,.latest-blog,.single-products,.service-text,.coming-product.coming-produ
 	margin: 0;
 	padding: 40px 0;
 }
-.footer-two .social-media {background: url('../img/footer/bg3.jpg')no-repeat ;padding-top:80px;}
+.footer-two .social-media {background: url('../img/collect/Versace-SS23-Mens-feat.webp')no-repeat ;padding-top:80px;}
 .newsletter h3 {
 	color: #333;
 	font-size: 25px;
@@ -2102,6 +2102,10 @@ select:focus{outline:none!important;border-color:transparent;border:0;}
     margin-left: -4px;
     padding: 0 10px;
 	font-size:16px;
+}
+
+.added a{
+	
 }
 /*====================================================================
 							[ END ]

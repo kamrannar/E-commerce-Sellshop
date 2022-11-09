@@ -11,9 +11,9 @@ from accounts import urls as account_urls
 from django.utils.translation import gettext_lazy as _
 from product.api import urls as product
 from accounts.api import urls as accounts
-from order.api import urls as orders
 from blog.api import urls as blogs
 from product.views import call_heavy_process
+
 
 urlpatterns = i18n_patterns(
     path(_('admin/'), admin.site.urls),
@@ -30,7 +30,7 @@ urlpatterns = i18n_patterns(
 urlpatterns += [path('api/', include(product)),
                 path('api/', include(accounts)),
                 path('api/', include(blogs)),
-                path('api/', include(orders)),
+            
                 ]
 
 # if 'rosetta' in settings.INSTALLED_APPS:

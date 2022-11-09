@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block content%}
+{% load static %}
+<!-- pages-title-start -->
+<div class="pages-title section-padding">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="pages-title-text text-center">
+					<h2>Wishlist</h2>
+					<ul class="text-left">
+						<li><a href="{% url 'home' %}">Home </a></li>
+						<li><span> // </span>Wishlist</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- pages-title-end -->
+<!-- wishlist content section start -->
+<section class="pages wishlist-page section-padding">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="table-responsive padding60">
+					<table class="wishlist-table text-center">
+						<thead>
+							<tr>
+								<th>Product</th>
+								<th>Price</th>
+								<th>Stock Status </th>
+								<th>Add To Cart</th>
+								<th>Remove</th>
+							</tr>
+						</thead>
+						<tbody>
+
+							{% for wishlist_item in wishlist_items %}
+							<tr>
+								<td class="td-img text-left">
+									<a href="#"><img src="{{ wishlist_item.product_version_id.cover_image_version.url }}"
+											alt="Add Product" /></a>
+									<div class="items-dsc">
+										<h5><a href="#">{{ wishlist_item.product_version_id.name }}</a></h5>
+										<p class="itemcolor">Color : <span>{{ wishlist_item.product_version_id.color_id.colors }}</span></p>
+										<p class="itemcolor">Size : <span>{{ wishlist_item.product_version_id.size_id.sizes }}</span></p>
+									</div>
+								</td>
+								<td>${{ wishlist_item.product_version_id.discount_price }}</td>
+								<td>In Stock</td>
+								<td>
+									<div class="submit-text">
+										<a class="update-cart" data-product_version_id="{{wishlist_item.product_version_id.id}}">Add to cart</a>
+									</div>
+								</td>
+								<td><button  class="wishlist" data-product_version_id="{{wishlist_item.product_version_id.id}}"><i class="mdi mdi-close" title="Remove this product"></i></button></td>
+							</tr>
+							{%endfor%}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- wishlist content section end -->
+{% endblock %}

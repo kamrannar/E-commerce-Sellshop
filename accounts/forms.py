@@ -1,5 +1,5 @@
 from django import forms
-from .models import Billing,Different_shipping
+from order.models import Billing,Different_shipping
 from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
 
@@ -30,4 +30,4 @@ class RegisterForm(forms.ModelForm):
         if self.cleaned_data['password'] != self.cleaned_data['confirm_password']:
             raise ValidationError('Passwords are not equal')
 
-        # return super(RegisterForm,self).clean()
+        return super(RegisterForm,self).clean()

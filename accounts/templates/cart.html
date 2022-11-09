@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+{% block content%}
+{% load static %}
+<!-- pages-title-start -->
+
+<div class="pages-title section-padding">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="pages-title-text text-center">
+					<h2>Cart</h2>
+					<ul class="text-left">
+						<li><a href="{% url 'home' %}">Home </a></li>
+						<li><span> // </span>Cart</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- pages-title-end -->
+<!-- cart content section start -->
+<section class="pages cart-page section-padding">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="table-responsive padding60">
+					<table class="wishlist-table text-center">
+						<thead>
+							<tr>
+								<th>Product</th>
+								<th>Price</th>
+								<th>quantity</th>
+								<th>Total Price</th>
+								<th>Remove</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								{% for cart_item in cart_items %}			
+								
+							<tr>
+								<td class="td-img text-left">
+									<a href="#"><img src="{{cart_item.product_version_id.cover_image_version.url}}"
+											alt="Add Product" /></a>
+									<div class="items-dsc">
+										<h5><a href="#">{{cart_item.product_version_id.name}}</a></h5>
+										<p class="itemcolor">Color :
+											<span>{{cart_item.product_version_id.color_id.colors}}</span></p>
+										<p class="itemcolor">Size :
+											<span>{{cart_item.product_version_id.size_id.sizes}}</span></p>
+									</div>
+								</td>
+								<td>${{cart_item.product_version_id.discount_price}}</td>
+		
+								<td>
+										<div class="plus-minus">
+											<button class="update-cart dec qtybutton" data-product_version_id="{{cart_item.product_version_id.id}}" data-action="decrease"
+												data-cart_itemss="{{cart_itemss.id}}"><a class="dec qtybutton">-</a></button>
+											<input type="text" value="{{cart_item.quantity}}" name="qtybutton" class="plus-minus-box">
+											<button class="update-cart inc qtybutton" data-action="increase" data-product_version_id="{{cart_item.product_version_id.id}}"
+												data-cart_itemss="{{cart_itemss.id}}"><a class="inc qtybutton">+</a></button>
+										</div>
+								</td>
+		
+
+								<td>
+									<strong>$  {% widthratio cart_item.quantity 1 cart_item.product_version_id.discount_price %} </strong>
+								</td>
+								<td><button class="update-cart" data-product_version_id="{{cart_item.product_version_id.id}}"><i class="mdi mdi-close" title="Remove this product"></i></button></td>
+							</tr>
+								  {%endfor%}     
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="row margin-top">
+
+			<div class="col-sm-12">
+				<div class="single-cart-form padding60">
+					<div class="log-title">
+						<h3><strong>payment details</strong></h3>
+					</div>
+					<div class="cart-form-text pay-details table-responsive">
+						<table>
+							<tbody>
+								<tr>
+									<th>Cart Subtotal</th>
+									<td id="subtotal">$ </td>
+								</tr>
+								<tr>
+									<th>Shipping and Handing</th>
+									<td id="shipping">$15.00</td>
+								</tr>
+								<tr>
+									<th >Vat</th>
+									<td id="vat">$00.00</td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr>
+									<th class="tfoot-padd">Order total</th>
+									<td class="tfoot-padd" id="order_total">$170.00</td>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row margin-top">
+			<div class="col-xs-12">
+				<div class="padding60">
+					<div class="row">
+						<div class="col-xs-12 col-sm-6 col-md-4">
+							<div class="single-cart-form">
+								<div class="log-title">
+									<h3><strong>calculate shipping</strong></h3>
+								</div>
+								<div class="cart-form-text custom-input">
+									<p>Enter your coupon code if you have one!</p>
+									<form action="mail.php" method="post">
+										<input type="text" name="country" placeholder="Country" />
+										<div class="submit-text">
+											<button type="submit">get a quote</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-4">
+							<div class="single-cart-form">
+								<div class="cart-form-text post-state custom-input">
+									<form action="mail.php" method="post">
+										<input type="text" name="state" placeholder="Region / State" />
+									</form>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-4">
+							<div class="single-cart-form">
+								<div class="cart-form-text post-state custom-input">
+									<form action="mail.php" method="post">
+										<input type="text" name="subject" placeholder="Post Code" />
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- cart content section end -->
+{% endblock %}
