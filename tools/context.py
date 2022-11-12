@@ -1,11 +1,11 @@
 from accounts.models import Cart,Cart_item
-from product.models import Image,Product_version,Category,Brand,Size,Color,Product
+from product.models import Image,Category,Brand
 import requests
 
 def main_context(request):
     context = {}
     context['images'] = Image.objects.all()
-    context['categories'] = requests.get('http://127.0.0.1:8000/api/categories/').json()
+    context['categories'] = Category.objects.all()
     context['brands'] = Brand.objects.all()
     context['sizes'] = requests.get('http://127.0.0.1:8000/api/sizes/').json()
     context['product_versions']=requests.get('http://127.0.0.1:8000/api/product_version/').json()

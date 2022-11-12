@@ -7,10 +7,13 @@ from django.views.generic import TemplateView
 from django.contrib import messages
 from django.views import View
 from django.http import HttpResponseRedirect
+from sellshop.tasks import heavy_process
+from django.core.mail import send_mail
+from django.conf import settings
 class home(TemplateView):
     model = Product_version
     template_name = 'index.html'
-
+    # heavy_process()
     def get_context_data(self, *args, **kwargs):
         context = super(home, self).get_context_data(**kwargs)
         context['price'] = Product_version.objects.order_by('price')

@@ -110,58 +110,101 @@ function getCookie(name) {
 }
 
 const csrftoken = getCookie('csrftoken');
-
-postData()
+access = window.localStorage.getItem('access')
 async function postData() {
-    let response = await fetch('http://localhost:8000/api/cart_items/');
-    let cart_items1 = await response.json();
-    let priceSum = 0
-    var sum = 0
+    await fetch('http://127.0.0.1:8000/api/cart_items/', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            // 'X-CSRFToken': csrftoken,
+            // 'Authorization': `Bearer ${access}`
+        },
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            let sum = 0
+            let priceSum = 0
+            cartMenu.innerHTML = ``
+            data.forEach((element) => {
+                if (element.cart_id.user_id.id == cart_idd) {
+                    if (document.getElementById(element.product_version_id.name)) {
+                        document.getElementById(element.product_version_id.name).remove()
+                        cartMenu.innerHTML += `
+            <div  id='${element.product_version_id.name}' class=" sin-itme clearfix ">
+            <a data-cart_item="${element.id}"  class="remove-cart"><i  class="mdi  mdi-close "></i></a>
 
-    cartMenu.innerHTML = ``
-
-    for (let cart_item1 of cart_items1) {
-        if (cart_item1.cart_id.user_id.id == cart_idd) {
-            cartMenu.innerHTML += `
-       <div  id='${cart_item1.product_version_id.name}' class=" sin-itme clearfix ">
-       <a data-cart_item="${cart_item1.id}"  class="remove-cart"><i  class="mdi  mdi-close "></i></a>
-
-       <a class="cart-img" href="/${cart_item1.product_version_id.slug}/"><img
-               src="${cart_item1.product_version_id.cover_image_version}" alt="" />
-       
-       </a>
-       <div class="menu-cart-text">
-           <a href="/${cart_item1.product_version_id.slug}/">
-               <h5>${cart_item1.product_version_id.name}</h5>
-           </a>
-           <span>Color : ${cart_item1.product_version_id.color_id.colors}</span>
-           <span> Qty : ${cart_item1.quantity}</span>
-           <strong>${cart_item1.product_version_id.discount_price} $</strong>
-       </div>
-   </div>`
-            priceSum += parseFloat(cart_item1.product_version_id.discount_price) * parseFloat(cart_item1.quantity)
-            if(document.getElementById('subtotal')){
-                document.getElementById('subtotal').innerHTML=`$ ${priceSum}`
-                document.getElementById('shipping').innerHTML=`$ ${priceSum*0.01}`
-                document.getElementById('vat').innerHTML=`$ ${parseInt(priceSum*0.18)}`
-                document.getElementById('order_total').innerHTML=`$ ${priceSum*1.01}`
-            }
+            <a class="cart-img" href="/${element.product_version_id.slug}/"><img
+                    src="${element.product_version_id.cover_image_version}" alt="" />
             
-        
-            sum += cart_item1.quantity
-        }
+            </a>
+            <div class="menu-cart-text">
+                <a href="/${element.product_version_id.slug}/">
+                    <h5>${element.product_version_id.name}</h5>
+                </a>
+                <span>Color : ${element.product_version_id.color_id.colors}</span>
+                <span>Size : ${element.product_version_id.size_id.sizes} Qty : ${element.quantity}</span>
+                <strong>${element.product_version_id.discount_price} $</strong>
+            </div>
+        </div>`
+                        element.quantity++
+                        priceSum += parseFloat(element.product_version_id.discount_price)
+                        sum += 1
+                    }
+                    else {
 
+                        cartMenu.innerHTML += `
+            <div id='${element.product_version_id.name}'   class="sin-itme clearfix ">
+            <a data-cart_item="${element.id}"  class="remove-cart"><i  class="mdi  mdi-close "></i></a>
+
+            <a class="cart-img" href="/${element.product_version_id.slug}/"><img
+                    src="${element.product_version_id.cover_image_version}" alt="" />
+            
+            </a>
+            <div class="menu-cart-text">
+                <a href="/${element.product_version_id.slug}/">
+                    <h5>${element.product_version_id.name}</h5>
+                </a>
+                <span>Color : ${element.product_version_id.color_id.colors}</span>
+                <span id='1'>Size : ${element.product_version_id.size_id.sizes} Qty : ${element.quantity}</span>
+                <strong>${element.product_version_id.discount_price} $</strong>
+            </div>
+        </div>`
+                        element.quantity++
+
+                        priceSum += parseFloat(element.product_version_id.discount_price)
+                        sum += 1
+                    }
+                }
+            });
+            cartMenu.innerHTML += `<div class="total">
+        <span>total <strong>= ${priceSum} $</strong></span>
+    </div><a class="goto" href="/accounts/cart/">go to cart</a>
+        <a class="out-menu" href="/accounts/checkout/">Check out</a>`
+
+            sum_and_item.innerHTML = `
+        <i class="mdi mdi-cart"></i>
+        ${sum} items : <strong> ${priceSum} $</strong>
+    `
+    if (document.getElementById('subtotal')){
+            document.getElementById('subtotal').innerHTML=`$ ${priceSum}`
+    document.getElementById('shipping').innerHTML=`$ ${priceSum*0.01}`
+    document.getElementById('vat').innerHTML=`$ ${parseInt(priceSum*0.18)}`
+    document.getElementById('order_total').innerHTML=`$ ${priceSum*1.01}`
     }
-    cartMenu.innerHTML += `<div class="total">
-    <span>total <strong>= ${priceSum} $</strong></span>
-</div><a class="goto" href="/accounts/cart/">go to cart</a>
-    <a class="out-menu" href="/accounts/checkout/">Check out</a>`
-    sum_and_item.innerHTML = `
-    <i class="mdi mdi-cart"></i>
-    ${sum} items : <strong> ${priceSum} $</strong>`
-    
- 
+
+        })
 }
+
+// async function postData() {
+//     let response = await fetch('http://localhost:8000/api/cart_items/');
+//     let cart_items = await response.json();
+//     let priceSum = 0
+//     var sum = 0
+
+//     cartMenu.innerHTML = ``
+
+    
+// }
 
 for (var i = 0; i < wishlist.length; i++) {
 
@@ -171,8 +214,8 @@ for (var i = 0; i < wishlist.length; i++) {
     })
 }
 
-if (updateBtns) {
-    for (var i = 0; i < updateBtns.length; i++) {
+for (var i = 0; i < updateBtns.length; i++) {
+
         updateBtns[i].addEventListener('click', function () {
             var action=this.dataset.action
             if (!isNaN(this.dataset.product_version_id)){
@@ -180,40 +223,18 @@ if (updateBtns) {
 
             }
             cart_items_quantity = 1
-            updateBtns.addClass('remove-cart')
-            updateBtns.removeClass('update-cart')
             updateUserOrder(cart_id, product_version_id, cart_items_quantity,action)
-
         })
     }
-}
-else {
-
-    for (var i = 0; i < removeBtns.length; i++) {
-        removeBtns[i].addEventListener('click', function () {
-            var action=this.dataset.action
-            product_version_id = parseInt(this.dataset.product_version_id)
-            cart_items_quantity = 1
-            removeBtns.addClass('update-cart')
-            removeBtns.removeClass('remove-cart')
-            updateUserOrder(cart_id, product_version_id, cart_items_quantity,action)
-
-        })
-    }
-
-
-}
-
 
 async function updateUserOrder(cart_id, product_version_id, cart_items_quantity,action) {
-    access_token = JSON.parse(localStorage.getItem('token'))
     response = await fetch('http://127.0.0.1:8000/api/cartitems_post/',
         {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRFToken': csrftoken,
-                // 'Authorization': `Bearer ${access_token}`
+                'Authorization': `Bearer ${access}`
 
             },
             body: JSON.stringify({ 'cart_id': cart_id, 'product_version_id': product_version_id, 'quantity': cart_items_quantity,'action':action })
@@ -222,7 +243,6 @@ async function updateUserOrder(cart_id, product_version_id, cart_items_quantity,
         })
         .then((data) => {
             postData()
-
         })
 }
 
@@ -235,9 +255,8 @@ async function updateWishlist(user, product_version_id) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRFToken': csrftoken,
+                // 'X-CSRFToken': csrftoken,
                 // 'Authorization': `Bearer ${access_token}`
-
             },
             body: JSON.stringify({ 'user_id_wishlist': user, 'product_version_id': product_version_id })
         })

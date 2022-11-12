@@ -1,0 +1,53 @@
+version: '3'
+services:
+  db:
+    image: 'postgres:13-alpine'
+    ports:
+      - 5433:5432
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=kamran
+      - POSTGRES_PASSWORD=123
+    volumes:
+      - ./backup:/var/lib/postgresql/data
+
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./:/app/
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+      # - redis 
+# redis:
+  #   image: redis:alpine
+  #   ports:
+  #     - 6380:6379
+  #   volumes:
+  #     - redisdata:/data
+  # celery:
+  #   restart: always
+  #   build:
+  #     context: .
+  #   command: celery -A sellshop worker -l info
+  #   volumes:
+  #     - .:/app
+  #   # env_file:
+  #   #   - ./.env.dev
+  #   depends_on:
+  #     - db
+  #     - redis
+  #     - web
+  # celery-beat:
+  #   build: .
+  #   command: celery -A sampleproject beat -l info
+  #   depends_on:
+  #     - db
+  #     - redis
+  #     - celery
+volumes:
+  dbdata:
+  redisdata:
+    external: false

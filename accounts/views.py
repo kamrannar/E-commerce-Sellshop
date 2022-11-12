@@ -9,7 +9,6 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from accounts.models import Cart, Cart_item,Wishlist
 
-
 class MyAccount(View):
     template_name = 'my-account.html'
     form_class = BillingForm
@@ -39,9 +38,8 @@ class LogoutView(RedirectView):
     permanent = False
     query_string = True
     pattern_name = 'home'
-
     def get_redirect_url(self, *args, **kwargs):
-        if self.request.user.is_authenticated():
+        if self.request.user.is_authenticated():            
             logout(self.request)
         return super(LogoutView, self).get_redirect_url(*args, **kwargs)
 
@@ -58,7 +56,6 @@ class RegisterView(CreateView):
                 form.cleaned_data["password"]
             )
             user.save()
-            print(User.objects.all().last())
             Cart.objects.create(user_id=User.objects.all().last())
 
             return redirect('/')
@@ -105,7 +102,3 @@ class WishlistView(ListView):
             user_id_wishlist=self.request.user)
 
         return context
-
-    # def post(self, request, *args, **kwargs):
-    #     print(request.POST)
-    #     return redirect('/accounts/cart/')

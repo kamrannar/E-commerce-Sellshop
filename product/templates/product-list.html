@@ -33,8 +33,8 @@
 						<div class="categories left-right-p">
 							<ul id="accordion" class="panel-group clearfix">
 								{% for category1 in categories%}
-								{% if category1.subcategories is null%}
 
+								{% if category1.subcategories is null%}
 								<li class="panel">
 									<div data-toggle="collapse" data-parent="#accordion" data-target="#collapse1">
 										<div class="medium-a">
@@ -42,12 +42,10 @@
 											{{category1.categories}}
 										</div>
 									</div>
-									{{category1.subcategories.categories}}
 
 									<div class="panel-collapse collapse in" id="collapse1">
 										{% for category in categories%}
-										{% if category.subcategories is not null and category1.subcategories.categories == category.subcategories.categories%}
-										
+										{% if category.subcategories is not null and category1 == category.subcategories%}
 										<div class="normal-a">
 											<a href="?category_id={{category.id}}">{{category.categories}}</a>
 										</div>
@@ -236,7 +234,7 @@
 
 													<p>{{product_version.text}}</p>
 													<div class="list-btn">
-														<a class="update-cart"data-product_version_id="{{product_version.id}}">add to cart</a>
+														<a class="update-cart" data-product_version_id="{{product_version.id}}">add to cart</a>
 														<a  class="wishlist" data-cart_itemss="{{cart_itemss.id}}" data-product_version_id="{{product_version.id}}">wishlist</a>
 														<a href="#{{product_version.id}}quick-view" data-toggle="modal"
 															data-target="#{{product_version.id}}quick-view">zoom</a>

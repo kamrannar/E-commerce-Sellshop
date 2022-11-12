@@ -3,7 +3,7 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 import os
-
+import datetime
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-hn^-(8cyozfq7k^t#m5utj=f2wd42y3x+an@xq$lggs43ejn*f'
 
@@ -30,7 +30,6 @@ INSTALLED_APPS = [
     'blog',
     'order',
     'product',
-    'rosetta',
     'rest_framework',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
@@ -38,17 +37,27 @@ INSTALLED_APPS = [
     'django_filters',
     'crispy_forms',
     'star_ratings',
-    'dbbackup',
     "corsheaders",
+    'paypal.standard.ipn',    
+    'django_celery_beat'
 
 ]
+PAYPAL_RECEIVER_EMAIL = 'kamrann.nariman@gmail.com'
+
+PAYPAL_TEST = True
+# SIMPLE_JWT  = {
+#     'ACCESS_TOKEN_LIFETIME': datetime.timedelta(seconds=5),
+#     'REFRESH_TOKEN_LIFETIME': datetime.timedelta(seconds=5),
+#     'ROTATE_REFRESH_TOKENS': True,
+#     'BLACKLIST_AFTER_ROTATION': True
+# }
 
 
 DBBACKUP_STORAGE = 'django.core.files.storage.FileSystemStorage'
 DBBACKUP_STORAGE_OPTIONS = {'location': '/backups/'}
 MIDDLEWARE = [
 
-    'blog.middlewares.BlockIPMiddleware',
+    # 'blog.middlewares.BlockIPMiddleware',
     'request_logging.middleware.LoggingMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -114,15 +123,14 @@ WSGI_APPLICATION = 'sellshop.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.environ.get("DB_NAME"),
-        'USER': os.environ.get("DB_USER"),
-        'PASSWORD': os.environ.get("DB_PASSWORD"),
-        'HOST': os.environ.get("DB_HOST"),
-        'PORT': os.environ.get("DB_PORT"),
+        'USER': 'kamran',
+        'PASSWORD': '123',
+        'HOST': 'db',
+        'PORT': 5432,
         
     }
 }
@@ -164,6 +172,7 @@ USE_L10N = True
 
 USE_TZ = True
 
+TIME_ZONE = 'Asia/Baku'
 
 STATIC_URL = 'static/'
 
@@ -207,6 +216,7 @@ CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_TRACK_STARTED = True
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 # CELERY_TASK_TIME_LIMIT = 30 * 60
 
 REST_REGISTRATION = {
@@ -216,3 +226,13 @@ REST_REGISTRATION = {
 }
 
 
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+SESSION_COOKIE_AGE = 30 * 60
+
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'kamrann.nariman@gmail.com'

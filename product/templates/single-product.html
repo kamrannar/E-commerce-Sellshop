@@ -117,7 +117,7 @@
 							</div>
 							<div class="list-btn">
 								<a class="update-cart" id="update-cart"
-									  data-cart_itemss="{{cart_itemss.id}}">add to cart </a>
+									  >add to cart </a>
 								<a class="wishlist" data-cart_itemss="{{cart_itemss.id}}">wishlist</a>
 								<a href="#" data-toggle="modal" data-target="#{{product_version.id}}quick-view">zoom</a>
 							</div>
@@ -261,8 +261,8 @@
 						<a href="/{{product.slug}}/"><img src="{{product.cover_image_version.url}}"
 								alt="{{product}}" /></a>
 						<div class="actions-btn">
-							<a href="" class="update-cart"><i class="mdi mdi-cart"></i></a>
-							<a href="#" data-toggle="modal" data-target="#{{product_version.id}}quick-view"><i class="mdi mdi-eye"></i></a>
+							<a class="update-cart" data-product_version_id="{{product.id}}"><i class="mdi mdi-cart"></i></a>
+							<a href="#" data-toggle="modal" data-target="#{{product.id}}quick-view"><i class="mdi mdi-eye"></i></a>
 							<a href="#"><i class="mdi mdi-heart"></i></a>
 						</div>
 					</div>

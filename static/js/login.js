@@ -18,6 +18,7 @@ login_form.addEventListener('submit', async function (event) {
     )
     if(response.ok){
         data= await response.json();
-        localStorage.setItem('token',JSON.stringify(data))
+        access=window.localStorage.setItem('access',data.access)
+        refresh = window.localStorage.setItem('refresh',data.refresh)
     }   
 })

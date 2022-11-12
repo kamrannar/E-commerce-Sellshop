@@ -33,6 +33,9 @@ Blog.objects.filter(title__contains='word to be searched')
 
 4) Daxil edilmiş məhsulla oxşar olan son dörd məhsulu qaytaran qs yazın :
 
+Product_version.objects.filter(
+            product=self.object.product).exclude(slug=self.kwargs['slug'])
+
 5) Ən populyar beş məhsul (product) taglərini qaytaran qs yazın :
 
 

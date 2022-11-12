@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-import redis
 from product.models import Product_version
 
 COUNTRY_CHOICES = (
@@ -62,13 +61,7 @@ class Cart_item(models.Model):
 
 
 class Newsletter(models.Model):
-    email = models.EmailField(unique=True)
+    emails = models.EmailField(unique=True)
 
     def __str__(self):
-        return self.email
-
-    # def save(self,*args,**kwargs):
-    #     super(Newsletter,self).save(*args,**kwargs)
-    #     print(self.email)
-    #     r=redis.Redis(host='localhost',port=6379)
-    #     r.publish('email_channel',self.email)
+        return self.emails

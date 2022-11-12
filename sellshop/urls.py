@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from core import urls as core_urls
+from core import urls as core_urls 
 from blog import urls as blog_urls
 from order import urls as order_urls
 from product import urls as product_urls
@@ -32,12 +32,6 @@ urlpatterns += [path('api/', include(product)),
                 path('api/', include(blogs)),
             
                 ]
-
-# if 'rosetta' in settings.INSTALLED_APPS:
-#     urlpatterns += [
-#         re_path(r'^rosetta/', include('rosetta.urls'))
-#     ]
-
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL,

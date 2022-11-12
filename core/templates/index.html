@@ -101,7 +101,7 @@
 										<img class="cover-image img-fluid"  src="{{product.cover_image}}" alt="Product Title" />
 									</a>
 									<div class="actions-btn">
-										<a href="/{{product_version.slug}}/"><i
+										<a class="update-cart" data-product_version_id="{{product_version.id}}"><i
 												class="mdi mdi-cart"></i></a>
 										<a href="#{{product_version.id}}quick-view" data-toggle="modal"
 											data-target="#{{product_version.id}}quick-view"><i class="mdi mdi-eye"></i></a>
@@ -267,7 +267,7 @@
 											<a href="{{product_version.slug}}"><img
 													src="{{new_product.cover_image.url}}" alt="Product Title" /></a>
 											<div class="actions-btn">
-												<a href="#"><i class="mdi mdi-cart"></i></a>
+												<a class="update-cart" data-product_version_id="{{product_version.id}}"><i class="mdi mdi-cart"></i></a>
 												<a href="#" data-toggle="modal" data-target="#{{product_version.id}}quick-view"><i
 														class="mdi mdi-eye"></i></a>
 												<a href="#"><i class="mdi mdi-heart"></i></a>

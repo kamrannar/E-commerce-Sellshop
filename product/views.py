@@ -1,4 +1,3 @@
-from sellshop.tasks import heavy_process
 from .models import *
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import FormMixin
@@ -113,5 +112,4 @@ def product_detail(request, id):
 
 
 def call_heavy_process(request):
-    heavy_process.delay()
-    return redirect('home')
+    return redirect('/')

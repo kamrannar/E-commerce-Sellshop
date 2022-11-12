@@ -2,6 +2,8 @@
 {% block content%}
 {% load static %}
         <!-- pages-title-start -->
+		
+		<script src="https://www.paypal.com/sdk/js?client-id=AXHAeQyHCbHFaB5Y-6gtM9EJP9AUDUwuLq8T_tAYAedTnXUUqxLyhfSS-l45rt5_ivpZETuWZIZ4tIh2&currency=USD" > </script>
 		<div class="pages-title section-padding">
 			<div class="container">
 				<div class="row">
@@ -121,13 +123,37 @@
 									<li class="panel">
 										<div data-toggle="collapse" data-parent="#accordion" data-target="#collapse3">
 											<div class="medium-a">
-												paypal
+		<div id="paypal-button-container">paypal</div>
+
+		<script>
+			paypal.Buttons({
+			  createOrder: (data, actions) => {
+				return actions.order.create({
+				  purchase_units: [{
+					amount: {
+					  value: '77.44' 
+					}
+				  }]
+				});
+			  },
+			  onApprove: (data, actions) => {
+				return actions.order.capture().then(function(orderData) {
+				  // Successful capture! For dev/demo purposes:
+				  console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+				  const transaction = orderData.purchase_units[0].payments.captures[0];
+				  alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
+				  // When ready to go live, remove the alert and show a success message within this page. For example:
+				  // const element = document.getElementById('paypal-button-container');
+				  // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+				  // Or go to another URL:  actions.redirect('thank_you.html');
+				});
+			  }
+			}).render('#paypal-button-container');
+		  </script>
 											</div>
 										</div>
 										<div class="paypal-dsc panel-collapse collapse" id="collapse3">
-											<div class="normal-a">
-												<p>Lorem Ipsum is simply in dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry.</p>
-											</div>
+										
 										</div>
 									</li>
 								</ul>
@@ -138,5 +164,6 @@
 				</div>
 			</div>
 		</section>
+
 		<!-- Checkout content section end -->
         {% endblock %}
