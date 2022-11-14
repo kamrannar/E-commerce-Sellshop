@@ -8,7 +8,7 @@ import datetime
 SECRET_KEY = 'django-insecure-hn^-(8cyozfq7k^t#m5utj=f2wd42y3x+an@xq$lggs43ejn*f'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
