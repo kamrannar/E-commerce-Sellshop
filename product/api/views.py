@@ -13,7 +13,10 @@ class ProductVersionViewset(viewsets.ModelViewSet):
     queryset = Product_version.objects.all()
     serializer_class = ProductVersionSerializer
     permission_classes = []
-
+    def filter_queryset(self, queryset):
+        for backend in list(self.filter_backends):
+            queryset = backend().filter_queryset(self.request, queryset, self)
+        return queryset
 
 class ProductListViewset(viewsets.ModelViewSet):
     queryset = Product.objects.all()

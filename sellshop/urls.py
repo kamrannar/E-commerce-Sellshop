@@ -18,14 +18,16 @@ from product.views import call_heavy_process
 urlpatterns = i18n_patterns(
     path(_('admin/'), admin.site.urls),
     path(_(''), include(core_urls)),
-    path('', include(blog_urls)),
-    path('', include(product_urls)),
-    path('', include(order_urls)),
+    path(_(''), include(blog_urls)),
+    path(_(''), include(product_urls)),
+    path(_(''), include(order_urls)),
     path('accounts/', include(account_urls)),
     path('accounts/', include('django.contrib.auth.urls')),
     path('', include('social_django.urls', namespace='social')),
     path('call_heavy_process', call_heavy_process, name='call_heavy_process'),
     path('ratings/', include('star_ratings.urls', namespace='ratings')),
+    path('rosetta/', include('rosetta.urls')),  
+
 )
 urlpatterns += [path('api/', include(product)),
                 path('api/', include(accounts)),

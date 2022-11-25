@@ -1,53 +1,60 @@
 version: '3'
 services:
-  db:
-    image: 'postgres:13-alpine'
+  postgres:
+    container_name:  postgres-db
+    image:           postgres
     ports:
-      - 5433:5432
+      - 5432:5432 # Bind host port 5432 to PostgreSQL port 5432
+    volumes:
+      - ./pgdb:/var/lib/postgresql/data
+    env_file: .env
     environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=kamran
-      - POSTGRES_PASSWORD=123
-    volumes:
-      - ./backup:/var/lib/postgresql/data
-
+      - LC_ALL=C.UTF-8
   web:
+    container_name: sellshop
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    restart: "always"
+    env_file: .env
     volumes:
-      - ./:/app/
+      - .:/app
+      - ./static/:/app/static/
+      - ./media/:/app/media/
     ports:
-      - 8000:8000
+      - "8000:8000"
+    links:
+      - postgres
+      - redis
     depends_on:
-      - db
-      # - redis 
-# redis:
-  #   image: redis:alpine
-  #   ports:
-  #     - 6380:6379
-  #   volumes:
-  #     - redisdata:/data
-  # celery:
-  #   restart: always
-  #   build:
-  #     context: .
-  #   command: celery -A sellshop worker -l info
-  #   volumes:
-  #     - .:/app
-  #   # env_file:
-  #   #   - ./.env.dev
-  #   depends_on:
-  #     - db
-  #     - redis
-  #     - web
-  # celery-beat:
-  #   build: .
-  #   command: celery -A sampleproject beat -l info
-  #   depends_on:
-  #     - db
-  #     - redis
-  #     - celery
-volumes:
-  dbdata:
-  redisdata:
-    external: false
+      - "postgres"
+  redis:
+    image: redis:alpine
+    ports:
+      - 6379:6379
+    volumes:
+      - ./redisdata:/data
+  celery:
+    restart: always
+    build:
+      context: .
+    command: celery -A sellshop worker -l info
+    volumes:
+      - .:/app
+    env_file:
+      - ./.env
+    depends_on:
+      - postgres
+      - redis
+      - web
+  celery-beat:
+    build: .
+    command: celery -A sellshop beat -l info
+    depends_on:
+      - postgres
+      - redis
+      - celery
+    env_file:
+            - ./.env
+networks:
+    default:
+        external:
+            name: nginx-proxy

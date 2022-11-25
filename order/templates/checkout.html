@@ -3,7 +3,7 @@
 {% load static %}
         <!-- pages-title-start -->
 		
-		<script src="https://www.paypal.com/sdk/js?client-id=AXHAeQyHCbHFaB5Y-6gtM9EJP9AUDUwuLq8T_tAYAedTnXUUqxLyhfSS-l45rt5_ivpZETuWZIZ4tIh2&currency=USD" > </script>
+		<script src="https://www.paypal.com/sdk/js?client-id=AQlCEAB8cVuLGijSY-0qsRMRWEYG9a-L4MKfPkWCVwufaNB9HsQ43ffhqxGHxdPBPuHl3rDcjJj3HPco&currency=USD" > </script>
 		<div class="pages-title section-padding">
 			<div class="container">
 				<div class="row">
@@ -131,7 +131,7 @@
 				return actions.order.create({
 				  purchase_units: [{
 					amount: {
-					  value: '77.44' 
+					  value: document.getElementById('order_total').value
 					}
 				  }]
 				});

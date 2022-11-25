@@ -10,7 +10,7 @@ from rest_framework.response import Response
 from rest_framework import status
 import json
 from rest_framework import status
-
+import requests
 class CartitemViewset(viewsets.ModelViewSet):
     queryset = Cart_item.objects.all()
     serializer_class = Cart_itemSerializer
@@ -27,37 +27,78 @@ class CartitemPostView(APIView):
         serializer = Cart_itemPostSerializer(data=request.data)
         data = json.loads(request.body)
         product_version_id = request.data.get('product_version_id')
+        
         cart_id = request.data.get('cart_id')
         a = Cart_item.objects.filter(product_version_id=product_version_id,cart_id=cart_id).first()
+        b = Product_version.objects.filter(id=product_version_id).first()
         if a:
+            
             if 'action' in data:
                 action=data['action']
+
                 if action=="increase":
                     a.quantity+=1
+                    # Product_version.objects.filter()  
                     a.save()
                     if serializer.is_valid():
                         return Response(serializer.data)
                 elif action=='decrease' and a.quantity==1:
+                    b.stocks+=1
+                    b.save()
                     a.delete()
+
                     if serializer.is_valid():
                         return Response(serializer.data)
                     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
                 elif action=='decrease' :
+                    b.stocks+=1
+                    b.save()
                     a.quantity-=1
                     a.save()
                     if serializer.is_valid():
                         return Response(serializer.data)
             else:
+                b.stocks+=1
+                b.save()
                 a.delete()
                 if serializer.is_valid():
+
                     return Response(serializer.data)
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         else:
             if serializer.is_valid():
+                b.stocks-=1
+                b.save()
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class WishlistDetailedView(APIView):
+    queryset = Wishlist.objects.all()
+
+    def get(self,request,*args,**kwargs):
+        cart_items = Wishlist.objects.all()
+        serializer = WishlistDetailedSerializer(cart_items,many=True)
+        return Response(serializer.data)
+
+    def post(self, request, *args, **kwargs):
+        serializer = WishlistDetailedSerializer(data=request.data)
+        product_version_id = request.data.get('product_version_id')
+        user_id = request.data.get('user_id_wishlist')
+        a = Wishlist.objects.filter(product_version_id=product_version_id,user_id_wishlist=user_id)
+        if a:
+            a.delete()
+            if serializer.is_valid():
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        else:
+
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)            
 
 class WishlistView(APIView):
     queryset = Wishlist.objects.all()
@@ -82,9 +123,7 @@ class WishlistView(APIView):
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)            
-
-
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)    
 
 class CartViewset(viewsets.ModelViewSet):
     queryset = Cart.objects.all()

@@ -35,41 +35,8 @@
 								<th>Remove</th>
 							</tr>
 						</thead>
-						<tbody>
-							<tr>
-								{% for cart_item in cart_items %}			
-								
-							<tr>
-								<td class="td-img text-left">
-									<a href="#"><img src="{{cart_item.product_version_id.cover_image_version.url}}"
-											alt="Add Product" /></a>
-									<div class="items-dsc">
-										<h5><a href="#">{{cart_item.product_version_id.name}}</a></h5>
-										<p class="itemcolor">Color :
-											<span>{{cart_item.product_version_id.color_id.colors}}</span></p>
-										<p class="itemcolor">Size :
-											<span>{{cart_item.product_version_id.size_id.sizes}}</span></p>
-									</div>
-								</td>
-								<td>${{cart_item.product_version_id.discount_price}}</td>
-		
-								<td>
-										<div class="plus-minus">
-											<button class="update-cart dec qtybutton" data-product_version_id="{{cart_item.product_version_id.id}}" data-action="decrease"
-												data-cart_itemss="{{cart_itemss.id}}"><a class="dec qtybutton">-</a></button>
-											<input type="text" value="{{cart_item.quantity}}" name="qtybutton" class="plus-minus-box">
-											<button class="update-cart inc qtybutton" data-action="increase" data-product_version_id="{{cart_item.product_version_id.id}}"
-												data-cart_itemss="{{cart_itemss.id}}"><a class="inc qtybutton">+</a></button>
-										</div>
-								</td>
-		
-
-								<td>
-									<strong>$  {% widthratio cart_item.quantity 1 cart_item.product_version_id.discount_price %} </strong>
-								</td>
-								<td><button class="update-cart" data-product_version_id="{{cart_item.product_version_id.id}}"><i class="mdi mdi-close" title="Remove this product"></i></button></td>
-							</tr>
-								  {%endfor%}     
+						<tbody id="cart_table">
+	
 
 						</tbody>
 					</table>
@@ -94,6 +61,9 @@
 									<th>Shipping and Handing</th>
 									<td id="shipping"></td>
 								</tr>
+								<a class="dec qtybutton">-</a>
+													<input type="text" value="02" name="qtybutton" class="plus-minus-box">
+													<a class="inc qtybutton">+</a>
 								<tr>
 									<th >Vat</th>
 									<td id="vat"></td>

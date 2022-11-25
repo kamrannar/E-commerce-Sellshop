@@ -8,6 +8,10 @@ from django.views.generic import *
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from accounts.models import Cart, Cart_item,Wishlist
+from product.models import Product
+from django.db.models import Q
+from django.utils.translation import gettext as _
+
 
 class MyAccount(View):
     template_name = 'my-account.html'
@@ -52,15 +56,21 @@ class RegisterView(CreateView):
         form = self.form_class(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            user.set_password(
-                form.cleaned_data["password"]
-            )
-            user.save()
-            Cart.objects.create(user_id=User.objects.all().last())
-
-            return redirect('/')
-        else:
-            messages.info(request, "Count not create account.")
+            user_emails=User.objects.all().values_list('email', flat=True)
+            if form.data['email'] in user_emails:
+                messages.error(request, _("Email is already registered"))
+                return HttpResponseRedirect(self.request.path_info)
+            else:   
+                user.set_password(
+                    form.cleaned_data["password"]
+                )
+                user.save()
+                Cart.objects.create(user_id=User.objects.all().last())
+                
+                messages.success(request, _("Successfully registered "+"\N{pinched fingers}")
+                )
+                return redirect('login')
+        return HttpResponseRedirect(self.request.path_info)
 
 
 def checkout(request):
@@ -102,3 +112,7 @@ class WishlistView(ListView):
             user_id_wishlist=self.request.user)
 
         return context
+
+
+
+        

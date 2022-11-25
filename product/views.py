@@ -10,7 +10,7 @@ from django.shortcuts import redirect
 from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib import messages
 from . forms import *
-
+from django.db.models import Q
 class ProductListView(ListView):
     model = Product
     template_name = 'product-list.html'
@@ -20,13 +20,17 @@ class ProductListView(ListView):
         context = super(ProductListView, self).get_context_data(**kwargs)
         context['best_brand'] = Product_version.objects.order_by(
             '-product_view')[0]
+        if len(Product_version.objects.filter(color_id=self.request.GET.get('color_id')))>0:
+            context['product_versions']=Product_version.objects.filter(color_id=self.request.GET.get('color_id'))
         return context
 
     def get_queryset(self, *args, **kwargs):
         size = self.request.GET.get('product_size')
         brands = self.request.GET.get('brand_id')
         categoriess = self.request.GET.get('category_id')
-        colors = self.request.GET.get('product_color')
+        colors = self.request.GET.get('color_id')
+        minPrice= self.request.GET.get('minPrice')
+        maxPrice= self.request.GET.get('maxPrice')
         if size:
             queryset = Product.objects.filter(product_size=size)
         elif brands:
@@ -35,6 +39,14 @@ class ProductListView(ListView):
             queryset = Product.objects.filter(product_color=colors)
         elif categoriess:
             queryset = Product.objects.filter(category_id=categoriess)
+            print(queryset)
+
+        elif (minPrice and maxPrice):
+            print(111111111111111111111111111)
+            queryset = Product.objects.filter(pro__discount_price__range=(minPrice, maxPrice)).distinct
+            print(queryset)
+        elif minPrice:
+            queryset = Product.objects.filter(Q(pro__discount_price__gte = minPrice))
         else:
             queryset = Product.objects.all()
         return queryset
@@ -110,6 +122,6 @@ def product_detail(request, id):
         product.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-
 def call_heavy_process(request):
+    # heavy_process.delay()
     return redirect('/')

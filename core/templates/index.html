@@ -3,6 +3,11 @@
 <!-- slider-section-start -->
 {% load i18n %}
 {% load static %}
+{% for message in messages %}
+			<div class="alert alert-{{ message.tags }} alert-dismissible" style="text-align: center" role="alert">
+			 <h1>{{ message }}</h1>
+			</div>
+		  {% endfor %}
 <div class="main-slider-one main-slider-two slider-area">
 	<div id="wrapper">
 		<div class="slider-wrapper">
@@ -14,8 +19,8 @@
 				<div class="container">
 					<div class="slider-left slider-right">
 						<div class="slide-text animated zoomInUp">
-							<h3>new collection</h3>
-							<h1>Men’s Fashion 2022 </h1>
+							<h3>{% trans 'New Collection' %}</h3>
+							<h1>{% trans "Men's Fashion 2022" %} </h1>
 						</div>
 						<div class="animated slider-btn fadeInUpBig">
 							<a class="shop-btn" href="{% url '404' %}">Shop now</a>
@@ -27,13 +32,13 @@
 				<div class="container">
 					<div class="slider-left two-caption-text slider-right">
 						<div class="slide-text animated zoomInUp">
-							<h3>new collection</h3>
-							<h1>Men’s Fashion 2022 </h1>
-							<span>Starting at $65.00. Don’t miss out!</span>
+							<h3>{% trans 'New Collection' %}</h3>
+							<h1>{% trans "Men's Fashion 2022" %} </h1>
+							<span>{% trans 'Starting at $65.00. Don’t miss out!' %}</span>
 						</div>
 						<div class="one-p animated bounceInLeft">
-							<p>The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those
-								interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum".</p>
+							<p>{% block translate %}The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those
+								interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum".{% endblock translate %}</p>
 						</div>
 						<div class="animated slider-btn fadeInUpBig">
 							<a class="shop-btn" href="{% url '404' %}">Shop now</a>
@@ -49,8 +54,7 @@
 <section class="collection-area collection-area2 section-padding">
 	<div class="container">
 		<div class="row">
-			{{responsee}}
-
+			
 			<div class="col-sm-6">
 				<div class="colect-text ">
 					<h4><a href="#">Fashion Collection 2022</a></h4>
@@ -89,28 +93,26 @@
 		<div class="wrapper">
 					<div class="row text-center nowrap" style="max-height:200px">
 						{% for product in products%}
+						
 						{% for product_version in product_versions%}
 
 						{%if product.title == product_version.product.title%}
-						<div class="col-xs-12 col-sm-6 col-md-4 "  id="post_data">
+						<div class="col-xs-12 col-sm-6 col-md-4 " id="post_data">
 							<div class="single-product" >
 								<div class="product-img" >
 
-									<a href="/{{product_version.slug}}/">
+									<a href="/{{CURRENT_LANGUAGE}}/{{product_version.slug}}/">
 
-										<img class="cover-image img-fluid"  src="{{product.cover_image}}" alt="Product Title" />
+										<img class="cover-image img-fluid"  src="{{product_version.cover_image_version.url}}" style="height: 300px;" alt="Product Title" />
 									</a>
 									<div class="actions-btn">
 										<a class="update-cart" data-product_version_id="{{product_version.id}}"><i
 												class="mdi mdi-cart"></i></a>
-										<a href="#{{product_version.id}}quick-view" data-toggle="modal"
-											data-target="#{{product_version.id}}quick-view"><i class="mdi mdi-eye"></i></a>
-										<a href="/{{product_version.slug}}/"><i
-												class="mdi mdi-heart"></i></a>
+	
 									</div>
 								</div>
 								<div class="product-dsc">
-									<p><a href="/{{product_version.slug}}/">{{product_version.product.title}}</a>
+									<p><a href="/{{CURRENT_LANGUAGE}}/{{product_version.slug}}/">{{product_version.product.title}}</a>
 									</p>
 									<span>${{product_version.price}}</span>
 								</div>
@@ -127,112 +129,6 @@
 	</div>
 </section>
 <!-- featured-products section end -->
-<!-- coming product section start -->
-<section class="coming-product coming-product2">
-	<div class="container">
-		<div class="row">
-			<div class="col-sm-4 col-md-2">
-				<div class="tab-menu nav nav-tabs padding">
-					<ul>
-						<li class="active"><a href="#dress1" data-toggle="tab" data-target="#dress1, #text1"><img
-									src="{% static 'img/coming/usc.jpg' %}" alt="" /></a></li>
-						<li><a href="#dress2" data-toggle="tab" data-target="#dress2,#text2"><img
-									src="{% static 'img/coming/usc2.jpg' %}" alt="" /></a></li>
-					</ul>
-				</div>
-			</div>
-			<div class="col-sm-7 col-md-5">
-				<div class="text-center large-img tab-content">
-					<div class="tab-pane fade in active" id="dress1">
-						<img src="{% static 'img/coming/usc.jpg' %}" alt="" />
-						<div class="count-text clearfix">
-							<ul id="countdown-1">
-								<li>
-									<p class="timeRefDays timedescription">days</p>
-									<span class="days timenumbers">00</span>
-								</li>
-								<li>
-									<p class="timeRefHours timedescription">hrs</p>
-									<span class="hours timenumbers">00</span>
-								</li>
-								<li>
-									<p class="timeRefMinutes timedescription">mins</p>
-									<span class="minutes timenumbers">00</span>
-								</li>
-								<li>
-									<p class="timeRefSeconds timedescription">secs</p>
-									<span class="seconds timenumbers">00</span>
-								</li>
-							</ul>
-						</div>
-					</div>
-					<div class="tab-pane fade" id="dress2">
-						<img src="{% static 'img/coming/usc2.jpg' %}" alt="" />
-						<div class="count-text clearfix">
-							<ul id="countdown-2">
-								<li>
-									<p class="timeRefDays timedescription">days</p>
-									<span class="days timenumbers">00</span>
-								</li>
-								<li>
-									<p class="timeRefHours timedescription">hrs</p>
-									<span class="hours timenumbers">00</span>
-								</li>
-								<li>
-									<p class="timeRefMinutes timedescription">mins</p>
-									<span class="minutes timenumbers">00</span>
-								</li>
-								<li>
-									<p class="timeRefSeconds timedescription">secs</p>
-									<span class="seconds timenumbers">00</span>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-sm-12 col-md-5">
-				<div class="padding">
-					<div class="tab-content">
-						<div class="single-coming tab-pane fade in active" id="text1">
-							<h4><a href="#">The Maker usc Dress</a></h4>
-							<span><strong>$569.00</strong> <del>$669.00</del></span>
-							<p class="come-p">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed does
-								eiusmodes tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim venim,
-								quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodoes tempor
-								incididunt ut labore et dolore magna aliqua. consequat. Ut enim ad minim veniam.</p>
-							<ul class="color-size">
-								<li><span>Size</span><strong>:</strong> <a href="#">SL</a><a href="#">ML</a><a
-										href="#">Xl</a></li>
-								<li><span>color</span><strong>:</strong> <a href="#">Red</a><a href="#">Grean</a><a
-										href="#">Blue</a></li>
-								<li><span>Brand</span><strong>:</strong>Crazy Fashion</li>
-								<li><span>category</span><strong>:</strong>Fashion Men’s</li>
-							</ul>
-						</div>
-						<div class="single-coming tab-pane fade" id="text2">
-							<h4><a href="#">The Maker usc Dress</a></h4>
-							<span><strong>$569.00</strong> <del>$669.00</del></span>
-							<p class="come-p">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed does
-								eiusmodes tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim venim,
-								quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodoes tempor
-								incididunt ut labore et dolore magna aliqua. consequat. Ut enim ad minim veniam.</p>
-							<ul class="color-size">
-								<li><span>Size</span><strong>:</strong> <a href="#">SL</a><a href="#">ML</a><a
-										href="#">Xl</a></li>
-								<li><span>color</span><strong>:</strong> <a href="#">Red</a><a href="#">Grean</a><a
-										href="#">Blue</a></li>
-								<li><span>Brand</span><strong>:</strong>Crazy Fashion</li>
-								<li><span>category</span><strong>:</strong>Fashion Men’s</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
-<!-- coming product section end -->
 <!-- tab-products section start -->
 <div class="tab-products single-products products-two section-padding extra-padding-top">
 	<div class="container">
@@ -264,17 +160,15 @@
 								<div class="col-xs-12 col-sm-6 col-md-4" >
 									<div class="single-product" >
 										<div class="product-img">
-											<a href="{{product_version.slug}}"><img
-													src="{{new_product.cover_image.url}}" alt="Product Title" /></a>
+											<a href="/{{CURRENT_LANGUAGE}}/{{product_version.slug}}/"><img
+													src="{{product_version.cover_image_version.url}}"  style="height: 300px"  alt="Product Title" /></a>
 											<div class="actions-btn">
 												<a class="update-cart" data-product_version_id="{{product_version.id}}"><i class="mdi mdi-cart"></i></a>
-												<a href="#" data-toggle="modal" data-target="#{{product_version.id}}quick-view"><i
-														class="mdi mdi-eye"></i></a>
-												<a href="#"><i class="mdi mdi-heart"></i></a>
+												
 											</div>
 										</div>
 										<div class="product-dsc">
-											<p><a href="{{product_version.product}}">{{product_version.product.title}}</a></p>
+											<p><a href="/{{CURRENT_LANGUAGE}}/{{product_version.slug}}/">{{product_version.product.title}}</a></p>
 											<span>${{product_version.price}}</span>
 										</div>
 									</div>
@@ -290,59 +184,66 @@
 				</div>
 			</div>
 			<!-- arrival product end -->
+			
 			<div class="tab-pane fade" id="popular">
 				<div class="wrapper">
 					<ul class="load-list load-list-three">
 						<li>
 							<div class="row text-center">
+				{%for popular_product in popular_products%}
+
 								<div class="col-xs-12 col-sm-6 col-md-4">
 									<div class="single-product">
 										<div class="product-img">
-											<a href="{product_version.slug}}"><img
-													src="{% static 'img/products/16.jpg' %}" alt="Product Title" /></a>
+											<a href="/{{CURRENT_LANGUAGE}}/{{popular_product.slug}}/"><img
+													src="{{popular_product.cover_image_version.url}}" style="height: 300px"  alt="Product Title" /></a>
 											<div class="actions-btn">
 												<a href="#"><i class="mdi mdi-cart"></i></a>
-												<a href="#" data-toggle="modal" data-target="#{{product_version.id}}quick-view"><i
-														class="mdi mdi-eye"></i></a>
-												<a href="#"><i class="mdi mdi-heart"></i></a>
+								
 											</div>
 										</div>
 										<div class="product-dsc">
-											<p><a href="#">men’s Black t-shirt</a></p>
-											<span>$57.00</span>
+											<p><a href="/{{CURRENT_LANGUAGE}}/{{popular_product.slug}}/">{{popular_product.name}}</a></p>
+											<span>{{popular_product.discount_price}}</span>
 										</div>
 									</div>
 								</div>
+			{%endfor%}
+
 								<!-- single product end -->
 							</div>
 						</li>
 					</ul>
 				</div>
+
 			</div>
+			
 			<!-- popular product end -->
 			<div class="tab-pane fade" id="best">
 				<div class="wrapper">
 					<ul class="load-list load-list-four">
 						<li>
 							<div class="row text-center">
+								{%for bestseller in bestsellers%}
+
 								<div class="col-xs-12 col-sm-6 col-md-4">
 									<div class="single-product">
 										<div class="product-img">
-											<a href="#"><img src="{% static 'img/products/21.jpg' %}"
-													alt="Product Title" /></a>
+											<a href="/{{CURRENT_LANGUAGE}}/{{bestseller.slug}}/"><img
+													src="{{bestseller.cover_image_version.url}}" style="height: 300px"  alt="Product Title" /></a>
 											<div class="actions-btn">
 												<a href="#"><i class="mdi mdi-cart"></i></a>
-												<a href="#" data-toggle="modal" data-target="#{{product_version.id}}quick-view"><i
-														class="mdi mdi-eye"></i></a>
-												<a href="#"><i class="mdi mdi-heart"></i></a>
+									
 											</div>
 										</div>
 										<div class="product-dsc">
-											<p><a href="#">men’s White t-shirt</a></p>
-											<span>$165.20</span>
+											<p><a href="/{{CURRENT_LANGUAGE}}/{{bestseller.slug}}/">{{bestseller.name}}</a></p>
+											<span>{{bestseller.discount_price}}</span>
 										</div>
 									</div>
 								</div>
+								{%endfor%}
+
 								<!-- single product end -->
 							</div>
 						</li>

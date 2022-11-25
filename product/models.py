@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils.text import slugify
-
+from django.core.validators import MinValueValidator
 
 
 class Brand(models.Model):
@@ -61,9 +61,9 @@ class Product_version(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     price = models.FloatField()
-    stocks = models.IntegerField()
+    stocks = models.IntegerField(validators=[MinValueValidator(1)])
     discount_price = models.FloatField(max_length=250)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True,related_name='pro')
     cover_image_version = models.ImageField(
         upload_to="Cover_images_version", unique=True, null=True)
     slug = models.SlugField(max_length=120, null=True, blank=True)

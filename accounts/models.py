@@ -61,7 +61,7 @@ class Cart_item(models.Model):
 
 
 class Newsletter(models.Model):
-    emails = models.EmailField(unique=True)
+    email = models.EmailField(unique=True)
 
     def __str__(self):
-        return self.emails
+        return self.email

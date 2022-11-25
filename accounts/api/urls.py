@@ -20,6 +20,7 @@ urlpatterns = [
     path('', include(router.urls)),
     path('cartitems_post/', CartitemPostView.as_view(), name='cart_api'),
     path('wishlist/', WishlistView.as_view(), name='wishlist_api'),
+    path('wishlist_detailed/', WishlistDetailedView.as_view(), name='wishlist_api'),
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 
